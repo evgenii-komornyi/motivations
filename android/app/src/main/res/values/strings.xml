@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Motivations</string>
+    <string name="expo_splash_screen_resize_mode" translatable="false">contain</string>
+    <string name="expo_splash_screen_status_bar_translucent" translatable="false">false</string>
+    <string name="appwidget_text">Motivations. Нажми на картинку чтобы сконфигурировать меня в приложении.</string>
+    <string name="add_widget">Add widget</string>
+    <string name="app_widget_description">Renders random motivation phrase from application</string>
+</resources>
