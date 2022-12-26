@@ -1,1 +1,1 @@
-# Motivation Application UI React Native
+# Motivation Application UI React Native + Widget
