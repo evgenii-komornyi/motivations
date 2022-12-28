@@ -3,6 +3,7 @@ import { useParams } from 'react-router-native';
 import { View, SafeAreaView, FlatList, Text, Pressable } from 'react-native';
 
 import { useMotivationsStore } from '../../app/motivationsStore';
+import { useUserIdStore } from '../../app/userIdStore';
 import { getCategoryTitleByName } from '../../helpers/categories.helper';
 
 import { useCancelToken } from '../../hooks/useCancelToken';
@@ -18,6 +19,7 @@ import { NewMotivationForm } from '../new-motivation-form/new-motivation-form.co
 
 export const MotivationsByCategory = () => {
     const params = useParams();
+    const { userId } = useUserIdStore();
     const {
         isLoaded,
         motivations,
@@ -29,7 +31,7 @@ export const MotivationsByCategory = () => {
     const { newCancelToken, isCancel } = useCancelToken();
 
     useEffect(() => {
-        fetchMotivations(newCancelToken(), isCancel, params.category);
+        fetchMotivations(newCancelToken(), isCancel, params.category, userId);
 
         return () => unLoad();
     }, [newCancelToken, isCancel, params.category]);
@@ -43,13 +45,22 @@ export const MotivationsByCategory = () => {
                             {getCategoryTitleByName(params.category)}
                         </Text>
                     </View>
-                    <FlatList
-                        data={motivations}
-                        renderItem={({ item }) => (
-                            <Item item={item} category={params.category} />
-                        )}
-                        keyExtractor={item => item._id}
-                    />
+                    {motivations.length !== 0 ? (
+                        <FlatList
+                            data={motivations}
+                            renderItem={({ item }) => (
+                                <Item item={item} category={params.category} />
+                            )}
+                            keyExtractor={item => item._id}
+                        />
+                    ) : (
+                        <View>
+                            <Text style={styles.category}>
+                                Вы - новый пользователь! Добавьте свои фразы в
+                                базу!
+                            </Text>
+                        </View>
+                    )}
                     <View style={styles.createContainer}>
                         <Pressable
                             style={({ pressed }) => [

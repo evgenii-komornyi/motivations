@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, ImageBackground } from 'react-native';
 import { useOnBackPress } from '../hooks/useOnBackPress';
 
@@ -14,7 +14,7 @@ export const BackgroundsScreen = () => {
                 style={styles.image}
                 resizeMode="cover"
             >
-                <Text style={styles.text}>Скоро</Text>
+                <Text style={styles.text}>Soon</Text>
             </ImageBackground>
         </View>
     );

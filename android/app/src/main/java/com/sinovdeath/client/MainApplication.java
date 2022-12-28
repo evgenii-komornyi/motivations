@@ -12,6 +12,8 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.config.ReactFeatureFlags;
 import com.facebook.soloader.SoLoader;
+import com.sinovdeath.client.modules.deviceinfo.DeviceInfoPackager;
+import com.sinovdeath.client.modules.sharedstorage.SharedStoragePackager;
 import com.sinovdeath.client.newarchitecture.MainApplicationReactNativeHost;
 
 import expo.modules.ApplicationLifecycleDispatcher;
@@ -36,6 +38,8 @@ public class MainApplication extends Application implements ReactApplication {
       // Packages that cannot be autolinked yet can be added manually here, for example:
       // packages.add(new MyReactNativePackage());
       packages.add(new SharedStoragePackager());
+      packages.add(new DeviceInfoPackager());
+
       return packages;
     }
 

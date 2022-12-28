@@ -1,4 +1,4 @@
-package com.sinovdeath.client;
+package com.sinovdeath.client.modules.sharedstorage;
 
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
@@ -11,6 +11,7 @@ import android.widget.RemoteViews;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.sinovdeath.client.MotivationWidget;
 
 import org.json.JSONException;
 import org.json.JSONObject;

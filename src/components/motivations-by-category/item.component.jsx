@@ -8,6 +8,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useCreateRef } from '../../hooks/useCreateRef';
 
 import { styles } from './motivations-by-category.styles';
+import { useCancelToken } from '../../hooks/useCancelToken';
+import { useUserIdStore } from '../../app/userIdStore';
 
 export const Item = ({ item, category }) => {
     const [isButtonsShown, setIsButtonsShown] = useState(false);
@@ -17,7 +19,11 @@ export const Item = ({ item, category }) => {
 
     const currentIsActive = useCreateRef(isActive);
 
-    const { removeMotivation, updateActivation } = useMotivationsStore();
+    const { fetchMotivations, removeMotivation, updateActivation } =
+        useMotivationsStore();
+
+    const { newCancelToken, isCancel } = useCancelToken();
+    const { userId } = useUserIdStore();
 
     const toggleSwitch = () => {
         setIsActive(prev => !prev);
@@ -33,7 +39,18 @@ export const Item = ({ item, category }) => {
                 onPress: () => null,
                 style: 'cancel',
             },
-            { text: 'Да', onPress: () => removeMotivation(id) },
+            {
+                text: 'Да',
+                onPress: () => {
+                    removeMotivation(id);
+                    fetchMotivations(
+                        newCancelToken(),
+                        isCancel,
+                        category,
+                        userId
+                    );
+                },
+            },
         ]);
     };
 

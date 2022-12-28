@@ -7,16 +7,20 @@ import { Loader } from '../loader/loader.component';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 import { useMotivationsStore } from '../../app/motivationsStore';
+import { useUserIdStore } from '../../app/userIdStore';
 
 import { loaders } from '../../helpers/loader.helper';
 
 import { styles } from './new-motivation-form.styles';
 
 export const NewMotivationForm = ({ category }) => {
+    const { userId } = useUserIdStore();
+
     const [fields, setFields] = useState({
         title: '',
         category: category,
         isActive: true,
+        userId: userId,
     });
     const [isTooLong, setIsTooLong] = useState(false);
 
@@ -67,6 +71,7 @@ export const NewMotivationForm = ({ category }) => {
             title: '',
             category: category,
             isActive: true,
+            userId: userId,
         });
     };
 

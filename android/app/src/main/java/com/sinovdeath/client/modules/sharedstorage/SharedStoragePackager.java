@@ -1,4 +1,4 @@
-package com.sinovdeath.client;
+package com.sinovdeath.client.modules.sharedstorage;
 
 import androidx.annotation.NonNull;
 
