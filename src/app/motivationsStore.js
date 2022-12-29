@@ -45,7 +45,7 @@ const motivationsStore = (set, get) => ({
                 const { data } = await getMotivationsByCategory(
                     cancelationToken,
                     category,
-                    user
+                    userId
                 );
 
                 set({ motivations: data, isLoaded: true });
@@ -135,6 +135,13 @@ const motivationsStore = (set, get) => ({
                     },
                 }
             );
+
+            set(state => ({
+                ...state,
+                motivations: state.motivations.filter(
+                    motivation => motivation._id !== id
+                ),
+            }));
         } else {
             try {
                 await deleteMotivation(id);

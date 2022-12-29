@@ -8,7 +8,7 @@ export const createMotivation = motivation =>
 
 export const getMotivations = (cancelationToken, userId) =>
     axios.get(`${process.env.SERVER_HOST}${process.env.MOTIVATIONS_API}`, {
-        headers: { userId },
+        headers: { userId: userId },
         cancelToken: cancelationToken,
     });
 
@@ -23,7 +23,7 @@ export const getUniqueCategories = cancelationToken =>
 export const getMotivationsByCategory = (cancelationToken, category, userId) =>
     axios.get(
         `${process.env.SERVER_HOST}${process.env.MOTIVATIONS_API}/filter?category=${category}`,
-        { headers: { userId }, cancelToken: cancelationToken }
+        { headers: { userId: userId }, cancelToken: cancelationToken }
     );
 
 export const updateMotivation = (id, newMotivation) =>
