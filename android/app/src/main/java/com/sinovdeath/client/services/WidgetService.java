@@ -13,8 +13,8 @@ import java.util.Random;
 public class WidgetService {
     private static int previousRandomNumber = -1;
 
-    public String getItemFromStorage(Context context) {
-        String title = "";
+    public static Motivation getItemFromStorage(Context context) {
+        Motivation motivation = new Motivation("", "");
 
         try {
             SharedPreferences sharedPref = context.getSharedPreferences("DATA", Context.MODE_PRIVATE);
@@ -22,17 +22,17 @@ public class WidgetService {
             JSONObject appData = new JSONObject(appString);
 
             JSONArray motivations = appData.getJSONArray("motivations");
+            JSONObject randomMotivation = motivations.getJSONObject(getRandomNumberFromArray(motivations));
 
-            title = motivations.getJSONObject(getRandomNumberFromArray(motivations)).get("title").toString();
-
+            motivation = new Motivation(randomMotivation.get("title").toString(), randomMotivation.get("category").toString());
         } catch (JSONException ex) {
             ex.printStackTrace();
         }
 
-        return title;
+        return motivation;
     }
 
-    private int getRandomNumberFromArray(JSONArray array) {
+    private static int getRandomNumberFromArray(JSONArray array) {
         Random random = new Random();
         int newRandomNumber = random.nextInt(array.length());
 

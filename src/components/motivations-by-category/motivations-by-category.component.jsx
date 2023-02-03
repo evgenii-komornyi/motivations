@@ -42,7 +42,7 @@ export const MotivationsByCategory = () => {
                 <>
                     <View>
                         <Text style={styles.category}>
-                            {getCategoryTitleByName(params.category)}
+                            {getCategoryTitleByName(params.category).text}
                         </Text>
                     </View>
                     {motivations.length !== 0 ? (

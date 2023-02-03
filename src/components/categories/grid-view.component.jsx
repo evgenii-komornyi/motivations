@@ -1,6 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-native';
-import { Dimensions, TouchableOpacity, Text } from 'react-native';
+import {
+    Dimensions,
+    TouchableOpacity,
+    Text,
+    ImageBackground,
+} from 'react-native';
 
 import { getCategoryTitleByName } from '../../helpers/categories.helper';
 
@@ -17,12 +22,20 @@ const math = {
 export const GridView = ({ data: { category } }) => {
     const navigate = useNavigate();
 
+    const { text, image } = getCategoryTitleByName(category);
+
     return (
         <TouchableOpacity
             style={[styles.gridbox, math.margin]}
             onPress={() => navigate(`categories/${category}`)}
         >
-            <Text>{getCategoryTitleByName(category)}</Text>
+            <ImageBackground
+                source={image}
+                style={styles.image}
+                resizeMode="cover"
+            >
+                <Text style={styles.text}>{text}</Text>
+            </ImageBackground>
         </TouchableOpacity>
     );
 };
