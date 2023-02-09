@@ -3,10 +3,7 @@ import { useParams } from 'react-router-native';
 import { View, SafeAreaView, FlatList, Text, Pressable } from 'react-native';
 
 import { useMotivationsStore } from '../../app/motivationsStore';
-import { useUserIdStore } from '../../app/userIdStore';
 import { getCategoryTitleByName } from '../../helpers/categories.helper';
-
-import { useCancelToken } from '../../hooks/useCancelToken';
 
 import { Loader } from '../loader/loader.component';
 import { Item } from './item.component';
@@ -19,22 +16,21 @@ import { NewMotivationForm } from '../new-motivation-form/new-motivation-form.co
 
 export const MotivationsByCategory = () => {
     const params = useParams();
-    const { userId } = useUserIdStore();
+
     const {
+        fetchMotivationsByCategory,
         isLoaded,
         motivations,
-        fetchMotivations,
         unLoad,
         modalVisible,
         setIsModalVisible,
     } = useMotivationsStore();
-    const { newCancelToken, isCancel } = useCancelToken();
 
     useEffect(() => {
-        fetchMotivations(newCancelToken(), isCancel, params.category, userId);
+        fetchMotivationsByCategory(params.category);
 
         return () => unLoad();
-    }, [newCancelToken, isCancel, params.category]);
+    }, [params.category]);
 
     return (
         <SafeAreaView style={{ flex: 1 }}>

@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Text, View, Alert, Pressable } from 'react-native';
 
 import { useWidgetStore } from '../../app/widgetStore';
-import { useUserIdStore } from '../../app/userIdStore';
-import { useCancelToken } from '../../hooks/useCancelToken';
 
 import { Loader } from '../loader/loader.component';
 import { loaders } from '../../helpers/loader.helper';
@@ -15,20 +13,18 @@ let timeout;
 
 export const WidgetSettings = () => {
     const [isSending, setIsSending] = useState(false);
-    const { userId } = useUserIdStore();
     const {
         sendToWidget,
         fetchAllActiveMotivations,
         isLoaded,
         activeMotivations,
     } = useWidgetStore();
-    const { newCancelToken, isCancel } = useCancelToken();
 
     useEffect(() => {
-        fetchAllActiveMotivations(newCancelToken(), isCancel, userId);
+        fetchAllActiveMotivations();
 
         return () => clearTimeout(timeout);
-    }, [newCancelToken, isCancel, fetchAllActiveMotivations]);
+    }, [fetchAllActiveMotivations]);
 
     const onSendToWidgetHandler = () => {
         if (activeMotivations.length === 0) {

@@ -4,6 +4,9 @@ import {
     faSitemap,
     faPlus,
     faPuzzlePiece,
+    faSliders,
+    faFileImport,
+    faFileExport,
 } from '@fortawesome/free-solid-svg-icons';
 
 import {
@@ -24,5 +27,8 @@ library.add(
     faFloppyDisk,
     faCircleXmark,
     faPenToSquare,
-    faTrashCan
+    faTrashCan,
+    faSliders,
+    faFileImport,
+    faFileExport
 );

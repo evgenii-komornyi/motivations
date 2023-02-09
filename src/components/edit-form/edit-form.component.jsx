@@ -5,22 +5,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 import { styles } from './edit-form.styles';
 import { useMotivationsStore } from '../../app/motivationsStore';
-import { useUserIdStore } from '../../app/userIdStore';
-import { useCancelToken } from '../../hooks/useCancelToken';
 
 export const EditForm = ({ item, closeForm, category }) => {
     const [title, setTitle] = useState('');
-    const { newCancelToken, isCancel } = useCancelToken();
 
-    const { userId } = useUserIdStore();
-    const { updateMotivation, fetchMotivations } = useMotivationsStore();
+    const { updateMotivation } = useMotivationsStore();
 
     useEffect(() => {
         setTitle(item.title);
 
         return () => {
             setTitle('');
-            fetchMotivations(newCancelToken(), isCancel, category, userId);
         };
     }, []);
 
@@ -42,7 +37,7 @@ export const EditForm = ({ item, closeForm, category }) => {
     const isButtonDisabled = title === '';
 
     const handleSave = () => {
-        updateMotivation(item._id, { title: title });
+        updateMotivation(item._id, { title: title }, category);
         closeForm(false);
     };
 

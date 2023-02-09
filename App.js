@@ -3,22 +3,27 @@ import { StatusBar } from 'expo-status-bar';
 import { NativeRouter } from 'react-router-native';
 import './src/icons/library.icon';
 
-import { View, NativeModules } from 'react-native';
+import { PermissionsAndroid, View } from 'react-native';
 
-import { useUserIdStore } from './src/app/userIdStore';
 import { RoutesMap } from './src/routes/routes';
 
 import { Navigation } from './src/components/navigation/navigation.component.jsx';
 
-const DeviceInfo = NativeModules.DeviceInfoOwn;
-
 const App = () => {
-    const { setUserId } = useUserIdStore();
-
     useEffect(() => {
-        DeviceInfo.getPhoneID()
-            .then(id => setUserId(id))
-            .catch(e => console.log(e));
+        const requestCameraPermission = async () => {
+            try {
+                await PermissionsAndroid.requestMultiple([
+                    PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+                    PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+                    PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES,
+                ]);
+            } catch (error) {
+                console.warn(error);
+            }
+        };
+
+        requestCameraPermission();
     }, []);
 
     return (

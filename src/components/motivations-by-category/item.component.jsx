@@ -8,6 +8,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useCreateRef } from '../../hooks/useCreateRef';
 
 import { styles } from './motivations-by-category.styles';
+import { Loader } from '../loader/loader.component';
+import { loaders } from '../../helpers/loader.helper';
 
 export const Item = ({ item, category }) => {
     const [isButtonsShown, setIsButtonsShown] = useState(false);
@@ -17,12 +19,17 @@ export const Item = ({ item, category }) => {
 
     const currentIsActive = useCreateRef(isActive);
 
-    const { removeMotivation, updateActivation } = useMotivationsStore();
+    const { removeMotivation, updateActivation, isSending } =
+        useMotivationsStore();
 
     const toggleSwitch = () => {
         setIsActive(prev => !prev);
         setTimeout(() => {
-            updateActivation(item._id, { isActive: currentIsActive.current });
+            updateActivation(
+                item._id,
+                { isActive: currentIsActive.current },
+                category
+            );
         }, 1);
     };
 
@@ -35,7 +42,7 @@ export const Item = ({ item, category }) => {
             },
             {
                 text: 'Да',
-                onPress: () => removeMotivation(id),
+                onPress: () => removeMotivation(id, category),
             },
         ]);
     };
@@ -44,7 +51,7 @@ export const Item = ({ item, category }) => {
         setIsButtonsShown(prev => !prev);
     };
 
-    return (
+    return !isSending ? (
         <Pressable
             onLongPress={onLongPressHandler}
             style={({ pressed }) => [
@@ -128,5 +135,7 @@ export const Item = ({ item, category }) => {
                 </View>
             )}
         </Pressable>
+    ) : (
+        <Loader sourceFile={loaders.loadingSend} />
     );
 };

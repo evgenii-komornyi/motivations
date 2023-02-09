@@ -1,7 +1,6 @@
 import { CatalogScreen } from '../screens/catalog.screen';
-import { CreateNewScreen } from '../screens/create.screen';
 import { CategoryScreen } from '../screens/category.screen';
-import { BackgroundsScreen } from '../screens/backgrounds.screen';
+import { SettingsScreen } from '../screens/settings.screen';
 import { WidgetSettingsScreen } from '../screens/widget-settings.screen';
 
 export const routes = [
@@ -10,12 +9,8 @@ export const routes = [
         screen: <CatalogScreen />,
     },
     {
-        path: '/backgrounds',
-        screen: <BackgroundsScreen />,
-    },
-    {
-        path: '/create',
-        screen: <CreateNewScreen />,
+        path: '/main-settings',
+        screen: <SettingsScreen />,
     },
     {
         path: '/categories/:category',
@@ -35,10 +30,10 @@ export const menus = [
         icon: 'sitemap',
     },
     {
-        path: '/backgrounds',
-        title: 'Фоны',
-        iconType: 'regular',
-        icon: 'images',
+        path: '/main-settings',
+        title: 'Настройки',
+        iconType: 'solid',
+        icon: 'sliders',
     },
     {
         path: '/settings',

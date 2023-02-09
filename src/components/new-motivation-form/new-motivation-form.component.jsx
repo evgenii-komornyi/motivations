@@ -7,20 +7,18 @@ import { Loader } from '../loader/loader.component';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 import { useMotivationsStore } from '../../app/motivationsStore';
-import { useUserIdStore } from '../../app/userIdStore';
 
+import { generateID } from '../../helpers/generators.helper';
 import { loaders } from '../../helpers/loader.helper';
 
 import { styles } from './new-motivation-form.styles';
 
 export const NewMotivationForm = ({ category }) => {
-    const { userId } = useUserIdStore();
-
     const [fields, setFields] = useState({
+        _id: generateID(),
         title: '',
         category: category,
         isActive: true,
-        userId: userId,
     });
     const [isTooLong, setIsTooLong] = useState(false);
 
@@ -68,10 +66,10 @@ export const NewMotivationForm = ({ category }) => {
                 ]);
         }, 1000);
         setFields({
+            _id: generateID(),
             title: '',
             category: category,
             isActive: true,
-            userId: userId,
         });
     };
 
