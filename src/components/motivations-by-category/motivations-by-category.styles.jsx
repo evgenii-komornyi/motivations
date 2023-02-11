@@ -3,9 +3,10 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
     itemContainerButton: {
         padding: 20,
-        marginVertical: 0,
+        marginVertical: 1,
         marginHorizontal: 16,
         borderWidth: 1,
+        borderRadius: 20,
     },
     title: {
         fontSize: 14,
@@ -26,13 +27,13 @@ export const styles = StyleSheet.create({
         right: 0,
     },
     createButton: {
-        width: 50,
-        height: 50,
-        padding: 10,
+        width: 40,
+        height: 40,
+        padding: 8,
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 1,
-        borderColor: 'black',
+        borderColor: 'white',
         borderRadius: 35,
     },
     buttonContainer: {

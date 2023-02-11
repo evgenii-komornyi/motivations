@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { Constants } from '../../constants/constants';
-import { useParams } from 'react-router-native';
+import { useNavigate, useParams } from 'react-router-native';
 
 import { View, SafeAreaView, FlatList, Text, Pressable } from 'react-native';
+import { Header } from 'react-native-elements';
 import { ModalWindow } from '../modal/modal.component';
 import { NewMotivationForm } from '../new-motivation-form/new-motivation-form.component';
 import { Loader } from '../loader/loader.component';
@@ -15,6 +16,7 @@ import { getCategoryTitleByName } from '../../helpers/categories.helper';
 import { loaders } from '../../helpers/loader.helper';
 
 import { styles } from './motivations-by-category.styles';
+import { styles as globalStyles } from '../../styles/globalStyle';
 
 export const MotivationsByCategory = () => {
     const params = useParams();
@@ -34,15 +36,66 @@ export const MotivationsByCategory = () => {
         return () => unLoad();
     }, [params.category]);
 
+    const navigate = useNavigate();
+
     return (
         <SafeAreaView style={{ flex: 1 }}>
             {isLoaded ? (
                 <>
-                    <View>
-                        <Text style={styles.category}>
-                            {getCategoryTitleByName(params.category).text}
-                        </Text>
-                    </View>
+                    <Header
+                        containerStyle={{
+                            backgroundColor: 'black',
+                            height: 50,
+                        }}
+                        leftComponent={
+                            <Pressable
+                                style={({ pressed }) => [
+                                    {
+                                        backgroundColor: pressed
+                                            ? 'rgba(255, 165, 0, 1)'
+                                            : 'transparent',
+                                    },
+                                    globalStyles.button,
+                                ]}
+                                onPress={() => navigate(-1)}
+                            >
+                                <Icon
+                                    type={Constants.IONICONS_ICON}
+                                    icon="arrow-back"
+                                    size={Constants.SMALL_ICON_SIZE}
+                                    color="white"
+                                />
+                            </Pressable>
+                        }
+                        centerComponent={{
+                            text: getCategoryTitleByName(params.category).text,
+                            style: {
+                                color: '#fff',
+                                fontSize: 20,
+                                fontWeight: 'bold',
+                            },
+                        }}
+                        rightComponent={
+                            <Pressable
+                                style={({ pressed }) => [
+                                    {
+                                        backgroundColor: pressed
+                                            ? 'rgba(255, 165, 0, 1)'
+                                            : 'transparent',
+                                    },
+                                    globalStyles.button,
+                                ]}
+                                onPress={() => setIsModalVisible(true)}
+                            >
+                                <Icon
+                                    type={Constants.MATERIALCOMMUNITYICONS_ICON}
+                                    icon="notebook-plus-outline"
+                                    size={Constants.SMALL_ICON_SIZE}
+                                    color="white"
+                                />
+                            </Pressable>
+                        }
+                    />
                     {motivations.length !== 0 ? (
                         <FlatList
                             data={motivations}
@@ -50,6 +103,7 @@ export const MotivationsByCategory = () => {
                                 <Item item={item} category={params.category} />
                             )}
                             keyExtractor={item => item._id}
+                            style={{ marginTop: 10 }}
                         />
                     ) : (
                         <View>
@@ -59,25 +113,6 @@ export const MotivationsByCategory = () => {
                             </Text>
                         </View>
                     )}
-                    <View style={styles.createContainer}>
-                        <Pressable
-                            style={({ pressed }) => [
-                                {
-                                    backgroundColor: pressed
-                                        ? 'rgba(0, 0, 0, 0.2)'
-                                        : 'white',
-                                },
-                                styles.createButton,
-                            ]}
-                            onPress={() => setIsModalVisible(true)}
-                        >
-                            <Icon
-                                type={Constants.MATERIALCOMMUNITYICONS_ICON}
-                                icon="notebook-plus-outline"
-                                size={Constants.MEDIUM_ICON_SIZE}
-                            />
-                        </Pressable>
-                    </View>
                     <ModalWindow
                         modalVisible={modalVisible}
                         setModalVisible={setIsModalVisible}

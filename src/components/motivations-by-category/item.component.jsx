@@ -63,13 +63,13 @@ export const Item = ({ item, category }) => {
                 {
                     borderColor:
                         pressed && item.isActive
-                            ? 'rgba(120, 220, 120, 0.8)'
-                            : 'rgba(220, 120, 120, 0.8)',
+                            ? 'rgba(154, 205, 50, 0.8)'
+                            : 'rgba(255, 165, 0, 0.8)',
                 },
                 {
                     backgroundColor: isActive
-                        ? 'rgba(120, 220, 120, 0.4)'
-                        : 'rgba(220, 120, 120, 0.4)',
+                        ? 'rgba(154, 205, 50, 0.8)'
+                        : 'rgba(255, 165, 0, 0.4)',
                 },
                 styles.itemContainerButton,
             ]}

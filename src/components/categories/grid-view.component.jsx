@@ -15,7 +15,7 @@ const screenHeight = Dimensions.get('window').height;
 
 const math = {
     margin: {
-        marginBottom: (Math.round(screenHeight) - 80 - 3 * 206) / 3,
+        marginBottom: (Math.round(screenHeight) - 80 - 50 - 10 - 3 * 206) / 3,
     },
 };
 
@@ -31,6 +31,7 @@ export const GridView = ({ data: { category } }) => {
         >
             <ImageBackground
                 source={image}
+                imageStyle={{ borderRadius: 10 }}
                 style={styles.image}
                 resizeMode="cover"
             >
