@@ -138,9 +138,9 @@ export const NewMotivationForm = ({ category }) => {
                     >
                         <View style={styles.iconContainer}>
                             <Icon
-                                type={Constants.ICON_TYPE_REGULAR}
-                                icon="floppy-disk"
-                                size={Constants.APP_ICON_SIZE}
+                                type={Constants.MATERIALCOMMUNITYICONS_ICON}
+                                icon="content-save-edit-outline"
+                                size={Constants.SMALL_ICON_SIZE}
                             />
                         </View>
                         <View style={styles.saveTitleContainer}>

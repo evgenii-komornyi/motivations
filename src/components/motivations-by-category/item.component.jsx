@@ -117,8 +117,8 @@ export const Item = ({ item, category }) => {
                         onPress={() => setIsEdit(prev => !prev)}
                     >
                         <Icon
-                            type={Constants.ICON_TYPE_REGULAR}
-                            icon="pen-to-square"
+                            type={Constants.MATERIALCOMMUNITYICONS_ICON}
+                            icon="notebook-edit-outline"
                             size={Constants.BIG_ICON_SIZE}
                         />
                     </Pressable>
@@ -134,8 +134,8 @@ export const Item = ({ item, category }) => {
                         onPress={() => removeItem(item._id)}
                     >
                         <Icon
-                            type={Constants.ICON_TYPE_REGULAR}
-                            icon="trash-can"
+                            type={Constants.MATERIALCOMMUNITYICONS_ICON}
+                            icon="notebook-remove"
                             size={Constants.BIG_ICON_SIZE}
                         />
                     </Pressable>

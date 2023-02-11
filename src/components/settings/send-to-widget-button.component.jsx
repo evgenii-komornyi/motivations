@@ -65,8 +65,8 @@ export const SendToWidgetButton = () => {
             onPress={() => onSendToWidgetHandler()}
         >
             <Icon
-                type={Constants.ICON_TYPE_SOLID}
-                icon="puzzle-piece"
+                type={Constants.MATERIALCOMMUNITYICONS_ICON}
+                icon="database-cog-outline"
                 size={Constants.MEDIUM_ICON_SIZE}
             />
             <Text style={styles.buttonText}>Отправить виджету</Text>

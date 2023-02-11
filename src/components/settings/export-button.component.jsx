@@ -122,8 +122,8 @@ export const ExportButton = () => {
             onPress={exportDBToFile}
         >
             <Icon
-                type={Constants.ICON_TYPE_SOLID}
-                icon="file-export"
+                type={Constants.MATERIALCOMMUNITYICONS_ICON}
+                icon="database-export-outline"
                 size={Constants.MEDIUM_ICON_SIZE}
             />
             <Text style={styles.buttonText}>Экспорт</Text>

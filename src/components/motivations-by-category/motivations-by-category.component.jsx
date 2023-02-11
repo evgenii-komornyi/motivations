@@ -72,9 +72,9 @@ export const MotivationsByCategory = () => {
                             onPress={() => setIsModalVisible(true)}
                         >
                             <Icon
-                                type={Constants.ICON_TYPE_SOLID}
-                                icon="plus"
-                                size={Constants.BIGGEST_ICON_SIZE}
+                                type={Constants.MATERIALCOMMUNITYICONS_ICON}
+                                icon="notebook-plus-outline"
+                                size={Constants.MEDIUM_ICON_SIZE}
                             />
                         </Pressable>
                     </View>

@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { NativeRouter } from 'react-router-native';
-import './src/icons/library.icon';
 
 import { PermissionsAndroid, View } from 'react-native';
 

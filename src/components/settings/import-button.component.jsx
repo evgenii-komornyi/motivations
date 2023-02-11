@@ -100,8 +100,8 @@ export const ImportButton = () => {
             onPress={pickDocument}
         >
             <Icon
-                type={Constants.ICON_TYPE_SOLID}
-                icon="file-import"
+                type={Constants.MATERIALCOMMUNITYICONS_ICON}
+                icon="database-import-outline"
                 size={Constants.MEDIUM_ICON_SIZE}
             />
             <Text style={styles.buttonText}>Импорт</Text>
