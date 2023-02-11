@@ -6,4 +6,11 @@ export const Constants = {
     LOVE: 'love',
     MOTIVATION: 'motivation',
     QUOTES: 'quotes',
+    SMALL_ICON_SIZE: 20,
+    MEDIUM_ICON_SIZE: 25,
+    BIG_ICON_SIZE: 30,
+    BIGGER_ICON_SIZE: 32,
+    BIGGEST_ICON_SIZE: 40,
+    ICON_TYPE_SOLID: 'solid',
+    ICON_TYPE_REGULAR: 'regular',
 };

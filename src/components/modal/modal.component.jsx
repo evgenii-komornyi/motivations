@@ -1,10 +1,16 @@
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import React from 'react';
-import { Alert, Modal, Pressable, View } from 'react-native';
+import { Constants } from '../../constants/constants';
+
+import { Modal, Pressable, View } from 'react-native';
+import { Icon } from '../icon/icon.component';
+
+import { useAlert } from '../../hooks/useAlert';
 
 import { styles } from './modal.styles';
 
 export const ModalWindow = ({ children, modalVisible, setModalVisible }) => {
+    const alertCaller = useAlert();
+
     return (
         <View style={styles.centeredView}>
             <Modal
@@ -12,7 +18,9 @@ export const ModalWindow = ({ children, modalVisible, setModalVisible }) => {
                 transparent={true}
                 visible={modalVisible}
                 onRequestClose={() => {
-                    Alert.alert('Modal has been closed.');
+                    alertCaller(null, 'Modal has been closed.', [
+                        { text: 'Ok', onPress: () => null },
+                    ]);
                     setModalVisible(!modalVisible);
                 }}
             >
@@ -21,9 +29,10 @@ export const ModalWindow = ({ children, modalVisible, setModalVisible }) => {
                         style={[styles.button, styles.buttonClose]}
                         onPress={() => setModalVisible(false)}
                     >
-                        <FontAwesomeIcon
-                            icon="fa-regular fa-circle-xmark"
-                            size={30}
+                        <Icon
+                            type={Constants.ICON_TYPE_REGULAR}
+                            icon="circle-xmark"
+                            size={Constants.BIG_ICON_SIZE}
                         />
                     </Pressable>
                     <View style={styles.modalView}>{children}</View>

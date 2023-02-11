@@ -1,18 +1,20 @@
 import React, { useEffect } from 'react';
+import { Constants } from '../../constants/constants';
 import { useParams } from 'react-router-native';
+
 import { View, SafeAreaView, FlatList, Text, Pressable } from 'react-native';
+import { ModalWindow } from '../modal/modal.component';
+import { NewMotivationForm } from '../new-motivation-form/new-motivation-form.component';
+import { Loader } from '../loader/loader.component';
+import { Item } from './item.component';
+import { Icon } from '../icon/icon.component';
 
 import { useMotivationsStore } from '../../app/motivationsStore';
 import { getCategoryTitleByName } from '../../helpers/categories.helper';
 
-import { Loader } from '../loader/loader.component';
-import { Item } from './item.component';
+import { loaders } from '../../helpers/loader.helper';
 
 import { styles } from './motivations-by-category.styles';
-import { loaders } from '../../helpers/loader.helper';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { ModalWindow } from '../modal/modal.component';
-import { NewMotivationForm } from '../new-motivation-form/new-motivation-form.component';
 
 export const MotivationsByCategory = () => {
     const params = useParams();
@@ -69,9 +71,10 @@ export const MotivationsByCategory = () => {
                             ]}
                             onPress={() => setIsModalVisible(true)}
                         >
-                            <FontAwesomeIcon
-                                icon="fa-solid fa-plus"
-                                size={40}
+                            <Icon
+                                type={Constants.ICON_TYPE_SOLID}
+                                icon="plus"
+                                size={Constants.BIGGEST_ICON_SIZE}
                             />
                         </Pressable>
                     </View>

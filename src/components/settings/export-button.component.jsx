@@ -1,12 +1,17 @@
 import React from 'react';
-import * as FileSystem from 'expo-file-system';
-import { Pressable, Text, ToastAndroid, Alert } from 'react-native';
+import { Constants } from '../../constants/constants';
 
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import * as FileSystem from 'expo-file-system';
+import { Pressable, Text } from 'react-native';
+
+import { Icon } from '../icon/icon.component';
+
+import { useSettingsStore } from '../../app/settingsStore';
+import { useAlert } from '../../hooks/useAlert';
+
+import { generateFileName } from '../../helpers/generators.helper';
 
 import { styles } from './settings.styles';
-import { useSettingsStore } from '../../app/settingsStore';
-import { generateFileName } from '../../helpers/generators.helper';
 
 export const ExportButton = () => {
     const { motivations } = useSettingsStore();
@@ -31,6 +36,8 @@ export const ExportButton = () => {
         }
     };
 
+    const alertCaller = useAlert();
+
     const exportDBToFile = async () => {
         try {
             const permissions =
@@ -53,7 +60,7 @@ export const ExportButton = () => {
                 if (isSaved) {
                     const directory = directoryUri.split('/');
 
-                    Alert.alert(
+                    alertCaller(
                         'Сохранено!',
                         `Бэкап ${fileName} сохранён в папку ${directory[
                             directory.length - 1
@@ -67,7 +74,7 @@ export const ExportButton = () => {
                         ]
                     );
                 } else {
-                    Alert.alert(
+                    alertCaller(
                         'Не сохранено!',
                         'Данные, которые вы сохраняете сломаны!',
                         [
@@ -80,7 +87,7 @@ export const ExportButton = () => {
                     );
                 }
             } else {
-                Alert.alert(
+                alertCaller(
                     'Важно!',
                     'Вы должны разрешить доступ к папке загрузки!',
                     [
@@ -114,7 +121,11 @@ export const ExportButton = () => {
             disabled={isDisabled}
             onPress={exportDBToFile}
         >
-            <FontAwesomeIcon icon="fa-solid fa-file-export" size={30} />
+            <Icon
+                type={Constants.ICON_TYPE_SOLID}
+                icon="file-export"
+                size={Constants.MEDIUM_ICON_SIZE}
+            />
             <Text style={styles.buttonText}>Экспорт</Text>
         </Pressable>
     );

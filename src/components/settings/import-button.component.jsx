@@ -1,15 +1,22 @@
 import React from 'react';
+import { Constants } from '../../constants/constants';
+
 import * as FileSystem from 'expo-file-system';
 import * as DocumentPicker from 'expo-document-picker';
-import { Pressable, Text, ToastAndroid, Alert } from 'react-native';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+
+import { Pressable, Text, ToastAndroid } from 'react-native';
+import { Icon } from '../icon/icon.component';
 
 import { useSettingsStore } from '../../app/settingsStore';
+import { useToast } from '../../hooks/useToast';
+import { useAlert } from '../../hooks/useAlert';
 
 import { styles } from './settings.styles';
 
 export const ImportButton = () => {
     const { motivations, importToStorage } = useSettingsStore();
+    const alertCaller = useAlert();
+    const toastCaller = useToast();
 
     const pickDocument = async () => {
         try {
@@ -17,13 +24,7 @@ export const ImportButton = () => {
                 await DocumentPicker.getDocumentAsync({});
 
             if (type === 'cancel') {
-                ToastAndroid.showWithGravityAndOffset(
-                    'Для импорта нужно выбрать файл!',
-                    ToastAndroid.LONG,
-                    ToastAndroid.BOTTOM,
-                    25,
-                    50
-                );
+                toastCaller('Для импорта нужно выбрать файл!');
 
                 return;
             }
@@ -31,25 +32,22 @@ export const ImportButton = () => {
             const content = await FileSystem.readAsStringAsync(uri);
 
             if (mimeType !== 'application/json') {
-                ToastAndroid.showWithGravityAndOffset(
-                    `Невозможно импортировать ${mimeType}! Только json файлы!!!`,
-                    ToastAndroid.LONG,
-                    ToastAndroid.BOTTOM,
-                    25,
-                    50
+                toastCaller(
+                    `Невозможно импортировать ${mimeType}! Только json файлы!!!`
                 );
+
                 return;
             }
 
             if (motivations.length !== 0) {
-                Alert.alert(
+                alertCaller(
                     'Важно!',
                     'Ваша база не пуста! Если вы хотите продолжить, то данные перепишутся',
                     [
                         {
                             text: 'Продолжить',
                             onPress: () => importToDB(content),
-                            style: 'cancel',
+                            style: 'default',
                         },
                         {
                             text: 'Отменить',
@@ -101,7 +99,11 @@ export const ImportButton = () => {
             ]}
             onPress={pickDocument}
         >
-            <FontAwesomeIcon icon="fa-solid fa-file-import" size={25} />
+            <Icon
+                type={Constants.ICON_TYPE_SOLID}
+                icon="file-import"
+                size={Constants.MEDIUM_ICON_SIZE}
+            />
             <Text style={styles.buttonText}>Импорт</Text>
         </Pressable>
     );

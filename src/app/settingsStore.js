@@ -1,14 +1,50 @@
 import create from 'zustand';
 import { devtools } from 'zustand/middleware';
 
+import { NativeModules } from 'react-native';
+
+const { SharedStorage } = NativeModules;
+
 import {
     importMotivationsFromDatabase,
     getAllMotivations,
 } from '../storage/motivation.storage';
 
-const settingsStore = set => ({
+const settingsStore = (set, get) => ({
     motivations: [],
     isImported: true,
+    activeMotivations: [],
+    isSent: true,
+
+    fetchAllActiveMotivations: async () => {
+        try {
+            const allMotivations = await getAllMotivations();
+            const allActiveMotivations = allMotivations.filter(
+                motivation => motivation.isActive
+            );
+
+            set(state => ({
+                ...state,
+                activeMotivations: allActiveMotivations,
+            }));
+        } catch (error) {
+            console.warn(error);
+        }
+    },
+    sendToWidget: () => {
+        set({ isSent: false });
+        const existsState = get().activeMotivations;
+
+        if (existsState.length !== 0) {
+            SharedStorage.setItem(JSON.stringify({ motivations: existsState }));
+
+            setTimeout(() => {
+                set({
+                    isSent: true,
+                });
+            }, 4000);
+        }
+    },
 
     fetchAllMotivations: async () => {
         const all = await getAllMotivations();

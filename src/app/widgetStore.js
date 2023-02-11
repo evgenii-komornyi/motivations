@@ -18,13 +18,11 @@ const widgetStore = (set, get) => ({
                 motivation => motivation.isActive
             );
 
-            setTimeout(() => {
-                set(state => ({
-                    ...state,
-                    activeMotivations: allActiveMotivations,
-                    isLoaded: true,
-                }));
-            }, 2000);
+            set(state => ({
+                ...state,
+                activeMotivations: allActiveMotivations,
+                isLoaded: true,
+            }));
         } catch (error) {
             set({ isLoaded: false });
         }

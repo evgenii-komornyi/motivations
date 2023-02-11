@@ -8,10 +8,12 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@expo/vector-icons": "^13.0.0",
     "@fortawesome/fontawesome-svg-core": "^6.2.1",
     "@fortawesome/free-regular-svg-icons": "^6.2.1",
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@fortawesome/react-native-fontawesome": "^0.3.0",
+    "@mindinventory/react-native-tab-bar-interaction": "^2.2.3",
     "@react-native-async-storage/async-storage": "~1.17.3",
     "deprecated-react-native-prop-types": "^3.0.1",
     "expo": "~47.0.9",
@@ -28,7 +30,7 @@
     "react-native-dotenv": "^3.4.6",
     "react-native-picker-select": "^8.0.4",
     "react-native-shared-group-preferences": "^1.1.23",
-    "react-native-svg": "13.4.0",
+    "react-native-svg": "12.1.1",
     "react-router-native": "^6.4.5",
     "zustand": "^4.1.5"
   },

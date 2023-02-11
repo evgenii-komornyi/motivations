@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Pressable, Text, TextInput, View } from 'react-native';
+import { Constants } from '../../constants/constants';
 
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { Pressable, Text, TextInput, View } from 'react-native';
+import { Icon } from '../icon/icon.component';
+
+import { useMotivationsStore } from '../../app/motivationsStore';
 
 import { styles } from './edit-form.styles';
-import { useMotivationsStore } from '../../app/motivationsStore';
 
 export const EditForm = ({ item, closeForm, category }) => {
     const [title, setTitle] = useState('');
@@ -74,10 +76,10 @@ export const EditForm = ({ item, closeForm, category }) => {
                 disabled={isButtonDisabled}
             >
                 <View style={styles.iconContainer}>
-                    <FontAwesomeIcon
-                        icon="fa-regular fa-floppy-disk"
-                        color="black"
-                        size={20}
+                    <Icon
+                        type={Constants.ICON_TYPE_REGULAR}
+                        icon="floppy-disk"
+                        size={Constants.SMALL_ICON_SIZE}
                     />
                 </View>
                 <View style={styles.saveTitleContainer}>

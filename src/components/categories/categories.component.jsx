@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { FlatList, SafeAreaView, Button } from 'react-native';
+import { FlatList, SafeAreaView } from 'react-native';
 
 import { Loader } from '../loader/loader.component';
 import { GridView } from './grid-view.component';
