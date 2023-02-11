@@ -1,26 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { Pressable, Text, TextInput, View } from 'react-native';
+import { Constants } from '../../constants/constants';
 
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { Pressable, Text, TextInput, View } from 'react-native';
+import { Icon } from '../icon/icon.component';
+
+import { useMotivationsStore } from '../../app/motivationsStore';
 
 import { styles } from './edit-form.styles';
-import { useMotivationsStore } from '../../app/motivationsStore';
-import { useUserIdStore } from '../../app/userIdStore';
-import { useCancelToken } from '../../hooks/useCancelToken';
 
 export const EditForm = ({ item, closeForm, category }) => {
     const [title, setTitle] = useState('');
-    const { newCancelToken, isCancel } = useCancelToken();
 
-    const { userId } = useUserIdStore();
-    const { updateMotivation, fetchMotivations } = useMotivationsStore();
+    const { updateMotivation } = useMotivationsStore();
 
     useEffect(() => {
         setTitle(item.title);
 
         return () => {
             setTitle('');
-            fetchMotivations(newCancelToken(), isCancel, category, userId);
         };
     }, []);
 
@@ -42,7 +39,7 @@ export const EditForm = ({ item, closeForm, category }) => {
     const isButtonDisabled = title === '';
 
     const handleSave = () => {
-        updateMotivation(item._id, { title: title });
+        updateMotivation(item._id, { title: title }, category);
         closeForm(false);
     };
 
@@ -79,10 +76,10 @@ export const EditForm = ({ item, closeForm, category }) => {
                 disabled={isButtonDisabled}
             >
                 <View style={styles.iconContainer}>
-                    <FontAwesomeIcon
-                        icon="fa-regular fa-floppy-disk"
-                        color="black"
-                        size={20}
+                    <Icon
+                        type={Constants.ICON_TYPE_REGULAR}
+                        icon="floppy-disk"
+                        size={Constants.SMALL_ICON_SIZE}
                     />
                 </View>
                 <View style={styles.saveTitleContainer}>

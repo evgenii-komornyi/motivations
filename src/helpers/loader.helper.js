@@ -3,4 +3,5 @@ export const loaders = {
     catInBox: require('../../assets/animations/cat-in-box.json'),
     loadingSend: require('../../assets/animations/sending.json'),
     sendDataToWidget: require('../../assets/animations/loading-cat.json'),
+    importExport: require('../../assets/animations/lurking-cat.json'),
 };

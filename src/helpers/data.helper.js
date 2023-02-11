@@ -1,8 +1,7 @@
 import { CatalogScreen } from '../screens/catalog.screen';
-import { CreateNewScreen } from '../screens/create.screen';
-import { CategoryScreen } from '../screens/category.screen';
 import { BackgroundsScreen } from '../screens/backgrounds.screen';
-import { WidgetSettingsScreen } from '../screens/widget-settings.screen';
+import { CategoryScreen } from '../screens/category.screen';
+import { SettingsScreen } from '../screens/settings.screen';
 
 export const routes = [
     {
@@ -14,16 +13,12 @@ export const routes = [
         screen: <BackgroundsScreen />,
     },
     {
-        path: '/create',
-        screen: <CreateNewScreen />,
+        path: '/settings',
+        screen: <SettingsScreen />,
     },
     {
         path: '/categories/:category',
         screen: <CategoryScreen />,
-    },
-    {
-        path: '/settings',
-        screen: <WidgetSettingsScreen />,
     },
 ];
 
@@ -42,8 +37,37 @@ export const menus = [
     },
     {
         path: '/settings',
-        title: 'Виджет',
+        title: 'Настройки',
         iconType: 'solid',
-        icon: 'puzzle-piece',
+        icon: 'sliders',
     },
 ];
+
+// export const tabs = [
+//     {
+//         path: '/',
+//         name: 'Каталог',
+//         activeIcon: <Ionicons name="apps-outline" size={24} color="black" />,
+//         inactiveIcon: <Ionicons name="apps-outline" size={24} color="white" />,
+//     },
+//     {
+//         path: '/backgrounds',
+//         name: 'Фоны',
+//         activeIcon: (
+//             <Ionicons name="md-images-outline" size={24} color="black" />
+//         ),
+//         inactiveIcon: (
+//             <Ionicons name="md-images-outline" size={24} color="white" />
+//         ),
+//     },
+//     {
+//         path: '/main-settings',
+//         name: 'Настройки',
+//         activeIcon: (
+//             <Ionicons name="ios-settings-outline" size={24} color="black" />
+//         ),
+//         inactiveIcon: (
+//             <Ionicons name="ios-settings-outline" size={24} color="white" />
+//         ),
+//     },
+// ];

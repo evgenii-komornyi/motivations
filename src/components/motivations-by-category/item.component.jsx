@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
-import { Pressable, Text, View, Switch, Alert } from 'react-native';
+import { Constants } from '../../constants/constants';
+
+import { Pressable, Text, View, Switch } from 'react-native';
+import { EditForm } from '../edit-form/edit-form.component';
+import { Icon } from '../icon/icon.component';
+import { Loader } from '../loader/loader.component';
+
 import { useMotivationsStore } from '../../app/motivationsStore';
 
-import { EditForm } from '../edit-form/edit-form.component';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-
 import { useCreateRef } from '../../hooks/useCreateRef';
+import { useAlert } from '../../hooks/useAlert';
+import { loaders } from '../../helpers/loader.helper';
 
 import { styles } from './motivations-by-category.styles';
 
@@ -17,17 +22,24 @@ export const Item = ({ item, category }) => {
 
     const currentIsActive = useCreateRef(isActive);
 
-    const { removeMotivation, updateActivation } = useMotivationsStore();
+    const { removeMotivation, updateActivation, isSending } =
+        useMotivationsStore();
 
     const toggleSwitch = () => {
         setIsActive(prev => !prev);
         setTimeout(() => {
-            updateActivation(item._id, { isActive: currentIsActive.current });
+            updateActivation(
+                item._id,
+                { isActive: currentIsActive.current },
+                category
+            );
         }, 1);
     };
 
+    const alertCaller = useAlert();
+
     const removeItem = id => {
-        Alert.alert('Удалить?', 'Вы точно хотите удалить эту фразу из базы?', [
+        alertCaller('Удалить?', 'Вы точно хотите удалить эту фразу из базы?', [
             {
                 text: 'Нет',
                 onPress: () => null,
@@ -35,7 +47,7 @@ export const Item = ({ item, category }) => {
             },
             {
                 text: 'Да',
-                onPress: () => removeMotivation(id),
+                onPress: () => removeMotivation(id, category),
             },
         ]);
     };
@@ -44,7 +56,7 @@ export const Item = ({ item, category }) => {
         setIsButtonsShown(prev => !prev);
     };
 
-    return (
+    return !isSending ? (
         <Pressable
             onLongPress={onLongPressHandler}
             style={({ pressed }) => [
@@ -104,9 +116,10 @@ export const Item = ({ item, category }) => {
                         ]}
                         onPress={() => setIsEdit(prev => !prev)}
                     >
-                        <FontAwesomeIcon
-                            icon="fa-regular fa-pen-to-square"
-                            size={30}
+                        <Icon
+                            type={Constants.ICON_TYPE_REGULAR}
+                            icon="pen-to-square"
+                            size={Constants.BIG_ICON_SIZE}
                         />
                     </Pressable>
                     <Pressable
@@ -120,13 +133,16 @@ export const Item = ({ item, category }) => {
                         ]}
                         onPress={() => removeItem(item._id)}
                     >
-                        <FontAwesomeIcon
-                            icon="fa-regular fa-trash-can"
-                            size={30}
+                        <Icon
+                            type={Constants.ICON_TYPE_REGULAR}
+                            icon="trash-can"
+                            size={Constants.BIG_ICON_SIZE}
                         />
                     </Pressable>
                 </View>
             )}
         </Pressable>
+    ) : (
+        <Loader sourceFile={loaders.loadingSend} />
     );
 };

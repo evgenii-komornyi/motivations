@@ -1,15 +1,15 @@
 import create from 'zustand';
 import { devtools } from 'zustand/middleware';
+import { modifyMotivations } from '../helpers/motivations.helper';
 
 import {
     createMotivation,
-    deleteMotivation,
     getMotivationsByCategory,
-    updateActivation,
     updateMotivation,
-} from '../api/motivations.api';
-import { isDevelopment } from '../helpers/environment.helper';
-import Constants from 'expo-constants';
+    updateActivation,
+    deleteMotivation,
+    getAllMotivations,
+} from '../storage/motivation.storage';
 
 const motivationsStore = (set, get) => ({
     motivations: [],
@@ -20,141 +20,113 @@ const motivationsStore = (set, get) => ({
     setIsModalVisible: visibility => {
         set({ modalVisible: visibility });
     },
-    fetchMotivations: async (cancelationToken, isCancel, category, userId) => {
-        if (isDevelopment) {
-            fetch(
-                `${Constants.expoConfig.extra.eas.LOCAL_HOST}${Constants.expoConfig.extra.eas.MOTIVATIONS_API}/filter?category=${category}`,
-                {
-                    headers: {
-                        userId: userId,
-                    },
-                }
-            )
-                .then(response => response.json())
-                .then(data => set({ motivations: data, isLoaded: true }))
-                .catch(e => {
-                    console.log(e);
-                    set({ isLoaded: false });
-                });
-        } else {
-            try {
-                if (get().isLoaded) {
-                    set({ isLoaded: false });
-                }
+    fetchAllMotivations: async () => {
+        const allMotivations = await getAllMotivations();
 
-                const { data } = await getMotivationsByCategory(
-                    cancelationToken,
-                    category,
-                    userId
-                );
-
-                set({ motivations: data, isLoaded: true });
-            } catch (error) {
+        set({ motivations: allMotivations });
+    },
+    fetchMotivationsByCategory: async category => {
+        try {
+            if (get().isLoaded) {
                 set({ isLoaded: false });
-                if (isCancel(error)) return;
             }
+
+            const motivationsByCategory = await getMotivationsByCategory(
+                category
+            );
+
+            setTimeout(() => {
+                set({
+                    motivations: motivationsByCategory,
+                    isLoaded: true,
+                });
+            }, 2000);
+        } catch (error) {
+            set({ isLoaded: false });
         }
     },
     saveMotivation: async motivation => {
-        if (isDevelopment) {
-            set({ isSending: true });
-            const response = await fetch(
-                `${Constants.expoConfig.extra.eas.LOCAL_HOST}${Constants.expoConfig.extra.eas.MOTIVATIONS_API}`,
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(motivation),
-                }
-            );
-            if (response.status === 201) {
-                set({ isSending: false, modalVisible: true });
-            }
-        } else {
-            set({ isSending: true });
-            try {
-                const response = await createMotivation(motivation);
+        set({ isSending: true });
 
-                if (response.status === 201) {
-                    set({ isSending: false, modalVisible: true });
-                }
-            } catch (error) {
-                console.log(error);
+        try {
+            const existsMotivations = await getAllMotivations();
+            const newMotivations = [...existsMotivations, motivation];
+
+            const isSaved = await createMotivation(newMotivations);
+
+            if (isSaved) {
+                setTimeout(() => {
+                    set({ motivations: newMotivations, isSending: false });
+                }, 2000);
             }
+        } catch (error) {
+            console.warn(error);
         }
     },
-    updateMotivation: async (id, newMotivation) => {
-        if (isDevelopment) {
-            await fetch(
-                `${Constants.expoConfig.extra.eas.LOCAL_HOST}${Constants.expoConfig.extra.eas.MOTIVATIONS_API}/${id}`,
-                {
-                    method: 'PATCH',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(newMotivation),
-                }
-            );
-        } else {
-            try {
-                await updateMotivation(id, newMotivation);
-            } catch (error) {
-                console.log(error);
-            }
-        }
-    },
-    updateActivation: async (id, activation) => {
-        if (isDevelopment) {
-            await fetch(
-                `${Constants.expoConfig.extra.eas.LOCAL_HOST}${Constants.expoConfig.extra.eas.MOTIVATIONS_API}/activation/${id}`,
-                {
-                    method: 'PATCH',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(activation),
-                }
-            );
-        } else {
-            try {
-                await updateActivation(id, activation);
-            } catch (error) {
-                console.log(error);
-            }
-        }
-    },
-    removeMotivation: async id => {
-        if (isDevelopment) {
-            await fetch(
-                `${Constants.expoConfig.extra.eas.LOCAL_HOST}${Constants.expoConfig.extra.eas.MOTIVATIONS_API}/${id}`,
-                {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                }
-            );
+    updateMotivation: async (id, newMotivation, category) => {
+        set({ isSending: true });
 
-            set(state => ({
-                ...state,
-                motivations: state.motivations.filter(
-                    motivation => motivation._id !== id
-                ),
-            }));
-        } else {
-            try {
-                await deleteMotivation(id);
+        try {
+            const modifiedMotivations = await modifyMotivations(category, id, {
+                title: newMotivation.title,
+            });
 
-                set(state => ({
-                    ...state,
-                    motivations: state.motivations.filter(
-                        motivation => motivation._id !== id
+            const isSaved = await updateMotivation(modifiedMotivations);
+            if (isSaved) {
+                set({
+                    motivations: modifiedMotivations.filter(
+                        item => item.category === category
                     ),
-                }));
-            } catch (error) {
-                console.log(error);
+                });
+                setTimeout(() => {
+                    set({ isSending: false });
+                }, 1000);
             }
+        } catch (error) {
+            console.warn(error);
+        }
+    },
+    updateActivation: async (id, activation, category) => {
+        set({ isSending: true });
+
+        try {
+            const modifiedMotivations = await modifyMotivations(category, id, {
+                isActive: activation.isActive,
+            });
+
+            const isSaved = await updateActivation(modifiedMotivations);
+            if (isSaved) {
+                set({
+                    motivations: modifiedMotivations.filter(
+                        item => item.category === category
+                    ),
+                });
+                setTimeout(() => {
+                    set({ isSending: false });
+                }, 1000);
+            }
+        } catch (error) {
+            console.warn(error);
+        }
+    },
+    removeMotivation: async (id, category) => {
+        try {
+            const allMotivations = await getAllMotivations();
+            const modifiedMotivations = allMotivations.filter(
+                motivation => motivation._id !== id
+            );
+
+            const isSaved = await deleteMotivation(modifiedMotivations);
+
+            if (isSaved) {
+                set({
+                    motivations: modifiedMotivations.filter(
+                        item => item.category === category
+                    ),
+                });
+            }
+        } catch (error) {
+            console.warn(error);
         }
     },
     unLoad: () => {

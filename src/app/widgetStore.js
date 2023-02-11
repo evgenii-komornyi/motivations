@@ -3,9 +3,7 @@ import { devtools } from 'zustand/middleware';
 
 import { NativeModules } from 'react-native';
 
-import { getMotivations } from '../api/motivations.api';
-import { isDevelopment } from '../helpers/environment.helper';
-import Constants from 'expo-constants';
+import { getAllMotivations } from '../storage/motivation.storage';
 
 const { SharedStorage } = NativeModules;
 
@@ -13,35 +11,20 @@ const widgetStore = (set, get) => ({
     activeMotivations: [],
     isLoaded: false,
 
-    fetchAllActiveMotivations: async (cancelToken, isCancel, userId) => {
-        if (isDevelopment) {
-            fetch(
-                `${Constants.expoConfig.extra.eas.LOCAL_HOST}${Constants.expoConfig.extra.eas.MOTIVATIONS_API}`,
-                {
-                    headers: {
-                        userId: userId,
-                    },
-                }
-            )
-                .then(response => response.json())
-                .then(data => set({ activeMotivations: data, isLoaded: true }))
-                .catch(e => {
-                    console.log(e);
-                    set({ isLoaded: false });
-                });
-        } else {
-            try {
-                const { data } = await getMotivations(cancelToken, userId);
+    fetchAllActiveMotivations: async () => {
+        try {
+            const allMotivations = await getAllMotivations();
+            const allActiveMotivations = allMotivations.filter(
+                motivation => motivation.isActive
+            );
 
-                set(state => ({
-                    ...state,
-                    activeMotivations: data,
-                    isLoaded: true,
-                }));
-            } catch (error) {
-                set({ isLoaded: false });
-                if (isCancel(error)) return;
-            }
+            set(state => ({
+                ...state,
+                activeMotivations: allActiveMotivations,
+                isLoaded: true,
+            }));
+        } catch (error) {
+            set({ isLoaded: false });
         }
     },
     sendToWidget: () => {

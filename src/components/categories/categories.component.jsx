@@ -6,16 +6,14 @@ import { GridView } from './grid-view.component';
 
 import { useCategoriesStore } from '../../app/categoriesStore';
 
-import { useCancelToken } from '../../hooks/useCancelToken';
 import { loaders } from '../../helpers/loader.helper';
 
 export const Categories = () => {
-    const { newCancelToken, isCancel } = useCancelToken();
     const { categories, isLoaded, fetchCategories } = useCategoriesStore();
 
     useEffect(() => {
-        fetchCategories(newCancelToken(), isCancel);
-    }, [fetchCategories, newCancelToken, isCancel]);
+        fetchCategories();
+    }, [categories, fetchCategories]);
 
     return (
         <SafeAreaView style={{ flex: 1 }}>

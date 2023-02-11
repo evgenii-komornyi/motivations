@@ -1,26 +1,26 @@
 import React, { useState } from 'react';
-import { View, Text, Switch, TextInput, Pressable, Alert } from 'react-native';
+import { Constants } from '../../constants/constants';
 import { useNavigate } from 'react-router-native';
+
+import { View, Text, Switch, TextInput, Pressable } from 'react-native';
+import { Icon } from '../icon/icon.component';
 
 import { Loader } from '../loader/loader.component';
 
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-
 import { useMotivationsStore } from '../../app/motivationsStore';
-import { useUserIdStore } from '../../app/userIdStore';
+import { useAlert } from '../../hooks/useAlert';
 
+import { generateID } from '../../helpers/generators.helper';
 import { loaders } from '../../helpers/loader.helper';
 
 import { styles } from './new-motivation-form.styles';
 
 export const NewMotivationForm = ({ category }) => {
-    const { userId } = useUserIdStore();
-
     const [fields, setFields] = useState({
+        _id: generateID(),
         title: '',
         category: category,
         isActive: true,
-        userId: userId,
     });
     const [isTooLong, setIsTooLong] = useState(false);
 
@@ -47,11 +47,16 @@ export const NewMotivationForm = ({ category }) => {
 
     const navigate = useNavigate();
 
+    const alertCaller = useAlert();
+
     const handleSavePress = () => {
         saveMotivation(fields);
-        setTimeout(() => {
-            !isSending &&
-                Alert.alert('Сохранено', 'Данные сохранены в базу.', [
+
+        !isSending &&
+            alertCaller(
+                'Сохранено',
+                'Данные сохранены в базу.',
+                [
                     {
                         text: 'Вернуться в каталог',
                         onPress: () => {
@@ -65,13 +70,15 @@ export const NewMotivationForm = ({ category }) => {
                         onPress: () => null,
                         style: 'cancel',
                     },
-                ]);
-        }, 1000);
+                ],
+                1
+            );
+
         setFields({
+            _id: generateID(),
             title: '',
             category: category,
             isActive: true,
-            userId: userId,
         });
     };
 
@@ -130,10 +137,10 @@ export const NewMotivationForm = ({ category }) => {
                         disabled={isButtonDisabled}
                     >
                         <View style={styles.iconContainer}>
-                            <FontAwesomeIcon
-                                icon="fa-regular fa-floppy-disk"
-                                color="black"
-                                size={20}
+                            <Icon
+                                type={Constants.ICON_TYPE_REGULAR}
+                                icon="floppy-disk"
+                                size={Constants.APP_ICON_SIZE}
                             />
                         </View>
                         <View style={styles.saveTitleContainer}>
