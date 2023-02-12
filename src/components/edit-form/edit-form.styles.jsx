@@ -18,6 +18,7 @@ export const styles = StyleSheet.create({
         width: 130,
         marginTop: 10,
         flexDirection: 'row',
+        justifyContent: 'center',
         alignItems: 'center',
         paddingLeft: 10,
         paddingRight: 10,

@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { Text, View, ImageBackground } from 'react-native';
+import { View, ImageBackground } from 'react-native';
+import { CustomText } from '../custom-text/custom-text.component';
 
 import { styles } from './backgrounds.styles';
 
@@ -14,7 +15,7 @@ export const Backgrounds = () => {
                 style={styles.image}
                 resizeMode="cover"
             >
-                <Text style={styles.text}>Soon</Text>
+                <CustomText style={styles.text} text="Soon" />
             </ImageBackground>
         </View>
     );

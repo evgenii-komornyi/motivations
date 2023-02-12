@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Constants } from '../../constants/constants';
 
-import { Pressable, Text, View, Switch } from 'react-native';
+import { Pressable, View, Switch } from 'react-native';
 import { EditForm } from '../edit-form/edit-form.component';
+import { CustomText } from '../custom-text/custom-text.component';
 import { Icon } from '../icon/icon.component';
 import { Loader } from '../loader/loader.component';
 
@@ -77,7 +78,7 @@ export const Item = ({ item, category }) => {
             <View style={styles.wrapperContainer}>
                 <View style={styles.formContainer}>
                     {!isEdit ? (
-                        <Text style={styles.title}>{item.title}</Text>
+                        <CustomText style={styles.title} text={item.title} />
                     ) : (
                         <EditForm
                             item={item}

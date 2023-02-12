@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { Constants } from '../../constants/constants';
 import { useNavigate } from 'react-router-native';
 
-import { View, Text, Switch, TextInput, Pressable } from 'react-native';
+import { View, Switch, TextInput, Pressable } from 'react-native';
 import { Icon } from '../icon/icon.component';
+import { CustomText } from '../custom-text/custom-text.component';
 
 import { Loader } from '../loader/loader.component';
 
@@ -102,7 +103,7 @@ export const NewMotivationForm = ({ category }) => {
                     />
                     <View style={styles.visibilityContainer}>
                         <View style={styles.visibilityTitle}>
-                            <Text>Видимость:</Text>
+                            <CustomText text="Видимость: " />
                         </View>
                         <View style={styles.visibilitySwitcherContainer}>
                             <Switch
@@ -144,7 +145,7 @@ export const NewMotivationForm = ({ category }) => {
                             />
                         </View>
                         <View style={styles.saveTitleContainer}>
-                            <Text>Сохранить</Text>
+                            <CustomText text="Сохранить" />
                         </View>
                     </Pressable>
                 </>

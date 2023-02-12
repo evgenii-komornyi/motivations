@@ -4,6 +4,8 @@ import Tabbar from '@mindinventory/react-native-tab-bar-interaction';
 
 import { useTabs } from '../../hooks/useTabs';
 
+import { styles } from './navigation.styles';
+
 export const Navigation = () => {
     const navigate = useNavigate();
     const tabs = useTabs();
@@ -20,7 +22,7 @@ export const Navigation = () => {
             tabBarContainerBackground="#000"
             tabBarBackground="#fff"
             activeTabBackground="#000"
-            labelStyle={{ color: '#fff', fontWeight: '600', fontSize: 16 }}
+            labelStyle={styles.label}
             onTabChange={handleTabChange}
             transitionSpeed={100}
         />

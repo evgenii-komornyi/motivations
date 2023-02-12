@@ -2,8 +2,9 @@ import React from 'react';
 import { Constants } from '../../constants/constants';
 
 import * as FileSystem from 'expo-file-system';
-import { Pressable, Text } from 'react-native';
+import { Pressable } from 'react-native';
 
+import { CustomText } from '../custom-text/custom-text.component';
 import { Icon } from '../icon/icon.component';
 
 import { useSettingsStore } from '../../app/settingsStore';
@@ -126,7 +127,7 @@ export const ExportButton = () => {
                 icon="database-export-outline"
                 size={Constants.MEDIUM_ICON_SIZE}
             />
-            <Text style={styles.buttonText}>Экспорт</Text>
+            <CustomText style={styles.buttonText} text="Экспорт" />
         </Pressable>
     );
 };

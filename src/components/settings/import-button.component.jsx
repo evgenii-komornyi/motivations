@@ -4,7 +4,8 @@ import { Constants } from '../../constants/constants';
 import * as FileSystem from 'expo-file-system';
 import * as DocumentPicker from 'expo-document-picker';
 
-import { Pressable, Text, ToastAndroid } from 'react-native';
+import { Pressable, ToastAndroid } from 'react-native';
+import { CustomText } from '../custom-text/custom-text.component';
 import { Icon } from '../icon/icon.component';
 
 import { useSettingsStore } from '../../app/settingsStore';
@@ -104,7 +105,7 @@ export const ImportButton = () => {
                 icon="database-import-outline"
                 size={Constants.MEDIUM_ICON_SIZE}
             />
-            <Text style={styles.buttonText}>Импорт</Text>
+            <CustomText style={styles.buttonText} text="Импорт" />
         </Pressable>
     );
 };

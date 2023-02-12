@@ -1,11 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-native';
-import {
-    Dimensions,
-    TouchableOpacity,
-    Text,
-    ImageBackground,
-} from 'react-native';
+
+import { Dimensions, TouchableOpacity, ImageBackground } from 'react-native';
+import { CustomText } from '../custom-text/custom-text.component';
 
 import { getCategoryTitleByName } from '../../helpers/categories.helper';
 
@@ -35,7 +32,7 @@ export const GridView = ({ data: { category } }) => {
                 style={styles.image}
                 resizeMode="cover"
             >
-                <Text style={styles.text}>{text}</Text>
+                <CustomText style={styles.text} text={text} />
             </ImageBackground>
         </TouchableOpacity>
     );

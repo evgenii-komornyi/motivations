@@ -2,13 +2,14 @@ import React, { useEffect } from 'react';
 import { Constants } from '../../constants/constants';
 import { useNavigate, useParams } from 'react-router-native';
 
-import { View, SafeAreaView, FlatList, Text, Pressable } from 'react-native';
+import { View, SafeAreaView, FlatList, Pressable } from 'react-native';
 import { Header } from 'react-native-elements';
 import { ModalWindow } from '../modal/modal.component';
 import { NewMotivationForm } from '../new-motivation-form/new-motivation-form.component';
 import { Loader } from '../loader/loader.component';
 import { Item } from './item.component';
 import { Icon } from '../icon/icon.component';
+import { CustomText } from '../custom-text/custom-text.component';
 
 import { useMotivationsStore } from '../../app/motivationsStore';
 import { getCategoryTitleByName } from '../../helpers/categories.helper';
@@ -107,10 +108,11 @@ export const MotivationsByCategory = () => {
                         />
                     ) : (
                         <View>
-                            <Text style={styles.category}>
-                                Вы - новый пользователь! Добавьте свои фразы в
-                                базу!
-                            </Text>
+                            <CustomText
+                                style={styles.category}
+                                text="Вы - новый пользователь! Добавьте свои фразы в
+                                базу!"
+                            />
                         </View>
                     )}
                     <ModalWindow
