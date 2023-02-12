@@ -30,8 +30,8 @@ export const ModalWindow = ({ children, modalVisible, setModalVisible }) => {
                         onPress={() => setModalVisible(false)}
                     >
                         <Icon
-                            type={Constants.ICON_TYPE_REGULAR}
-                            icon="circle-xmark"
+                            type={Constants.IONICONS_ICON}
+                            icon="close-circle-outline"
                             size={Constants.BIG_ICON_SIZE}
                         />
                     </Pressable>

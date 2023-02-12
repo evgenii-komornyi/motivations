@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Constants } from '../../constants/constants';
 
-import { Pressable, Text, TextInput, View } from 'react-native';
+import { Pressable, TextInput, View } from 'react-native';
+import { CustomText } from '../custom-text/custom-text.component';
 import { Icon } from '../icon/icon.component';
 
 import { useMotivationsStore } from '../../app/motivationsStore';
@@ -77,13 +78,13 @@ export const EditForm = ({ item, closeForm, category }) => {
             >
                 <View style={styles.iconContainer}>
                     <Icon
-                        type={Constants.ICON_TYPE_REGULAR}
-                        icon="floppy-disk"
+                        type={Constants.MATERIALCOMMUNITYICONS_ICON}
+                        icon="content-save-edit-outline"
                         size={Constants.SMALL_ICON_SIZE}
                     />
                 </View>
                 <View style={styles.saveTitleContainer}>
-                    <Text>Сохранить</Text>
+                    <CustomText text="Сохранить" />
                 </View>
             </Pressable>
         </View>

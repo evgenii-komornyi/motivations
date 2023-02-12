@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Constants } from '../../constants/constants';
 
-import { Pressable, Text, View, Switch } from 'react-native';
+import { Pressable, View, Switch } from 'react-native';
 import { EditForm } from '../edit-form/edit-form.component';
+import { CustomText } from '../custom-text/custom-text.component';
 import { Icon } from '../icon/icon.component';
 import { Loader } from '../loader/loader.component';
 
@@ -63,13 +64,13 @@ export const Item = ({ item, category }) => {
                 {
                     borderColor:
                         pressed && item.isActive
-                            ? 'rgba(120, 220, 120, 0.8)'
-                            : 'rgba(220, 120, 120, 0.8)',
+                            ? 'rgba(154, 205, 50, 0.8)'
+                            : 'rgba(255, 165, 0, 0.8)',
                 },
                 {
                     backgroundColor: isActive
-                        ? 'rgba(120, 220, 120, 0.4)'
-                        : 'rgba(220, 120, 120, 0.4)',
+                        ? 'rgba(154, 205, 50, 0.8)'
+                        : 'rgba(255, 165, 0, 0.4)',
                 },
                 styles.itemContainerButton,
             ]}
@@ -77,7 +78,7 @@ export const Item = ({ item, category }) => {
             <View style={styles.wrapperContainer}>
                 <View style={styles.formContainer}>
                     {!isEdit ? (
-                        <Text style={styles.title}>{item.title}</Text>
+                        <CustomText style={styles.title} text={item.title} />
                     ) : (
                         <EditForm
                             item={item}
@@ -117,8 +118,8 @@ export const Item = ({ item, category }) => {
                         onPress={() => setIsEdit(prev => !prev)}
                     >
                         <Icon
-                            type={Constants.ICON_TYPE_REGULAR}
-                            icon="pen-to-square"
+                            type={Constants.MATERIALCOMMUNITYICONS_ICON}
+                            icon="notebook-edit-outline"
                             size={Constants.BIG_ICON_SIZE}
                         />
                     </Pressable>
@@ -134,8 +135,8 @@ export const Item = ({ item, category }) => {
                         onPress={() => removeItem(item._id)}
                     >
                         <Icon
-                            type={Constants.ICON_TYPE_REGULAR}
-                            icon="trash-can"
+                            type={Constants.MATERIALCOMMUNITYICONS_ICON}
+                            icon="notebook-remove"
                             size={Constants.BIG_ICON_SIZE}
                         />
                     </Pressable>

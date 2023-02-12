@@ -30,6 +30,7 @@ export const styles = StyleSheet.create({
     saveButtonContainer: {
         flex: 0.2,
         flexDirection: 'row',
+        justifyContent: 'center',
         alignItems: 'center',
         paddingLeft: 10,
         paddingRight: 10,

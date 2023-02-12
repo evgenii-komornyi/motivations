@@ -1,11 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-native';
-import {
-    Dimensions,
-    TouchableOpacity,
-    Text,
-    ImageBackground,
-} from 'react-native';
+
+import { Dimensions, TouchableOpacity, ImageBackground } from 'react-native';
+import { CustomText } from '../custom-text/custom-text.component';
 
 import { getCategoryTitleByName } from '../../helpers/categories.helper';
 
@@ -15,7 +12,7 @@ const screenHeight = Dimensions.get('window').height;
 
 const math = {
     margin: {
-        marginBottom: (Math.round(screenHeight) - 80 - 3 * 206) / 3,
+        marginBottom: (Math.round(screenHeight) - 80 - 50 - 3 * 190) / 3,
     },
 };
 
@@ -31,10 +28,11 @@ export const GridView = ({ data: { category } }) => {
         >
             <ImageBackground
                 source={image}
+                imageStyle={{ borderRadius: 10 }}
                 style={styles.image}
                 resizeMode="cover"
             >
-                <Text style={styles.text}>{text}</Text>
+                <CustomText style={styles.text} text={text} />
             </ImageBackground>
         </TouchableOpacity>
     );

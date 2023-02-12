@@ -1,7 +1,8 @@
 import React from 'react';
 import { Constants } from '../../constants/constants';
 
-import { Pressable, Text } from 'react-native';
+import { Pressable } from 'react-native';
+import { CustomText } from '../custom-text/custom-text.component';
 import { Icon } from '../icon/icon.component';
 
 import { useSettingsStore } from '../../app/settingsStore';
@@ -65,11 +66,11 @@ export const SendToWidgetButton = () => {
             onPress={() => onSendToWidgetHandler()}
         >
             <Icon
-                type={Constants.ICON_TYPE_SOLID}
-                icon="puzzle-piece"
+                type={Constants.MATERIALCOMMUNITYICONS_ICON}
+                icon="database-cog-outline"
                 size={Constants.MEDIUM_ICON_SIZE}
             />
-            <Text style={styles.buttonText}>Отправить виджету</Text>
+            <CustomText style={styles.buttonText} text="Отправить виджету" />
         </Pressable>
     );
 };

@@ -42,32 +42,3 @@ export const menus = [
         icon: 'sliders',
     },
 ];
-
-// export const tabs = [
-//     {
-//         path: '/',
-//         name: 'Каталог',
-//         activeIcon: <Ionicons name="apps-outline" size={24} color="black" />,
-//         inactiveIcon: <Ionicons name="apps-outline" size={24} color="white" />,
-//     },
-//     {
-//         path: '/backgrounds',
-//         name: 'Фоны',
-//         activeIcon: (
-//             <Ionicons name="md-images-outline" size={24} color="black" />
-//         ),
-//         inactiveIcon: (
-//             <Ionicons name="md-images-outline" size={24} color="white" />
-//         ),
-//     },
-//     {
-//         path: '/main-settings',
-//         name: 'Настройки',
-//         activeIcon: (
-//             <Ionicons name="ios-settings-outline" size={24} color="black" />
-//         ),
-//         inactiveIcon: (
-//             <Ionicons name="ios-settings-outline" size={24} color="white" />
-//         ),
-//     },
-// ];
