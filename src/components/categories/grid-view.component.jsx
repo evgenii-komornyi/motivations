@@ -15,7 +15,7 @@ const screenHeight = Dimensions.get('window').height;
 
 const math = {
     margin: {
-        marginBottom: (Math.round(screenHeight) - 80 - 50 - 10 - 3 * 206) / 3,
+        marginBottom: (Math.round(screenHeight) - 80 - 50 - 3 * 190) / 3,
     },
 };
 
