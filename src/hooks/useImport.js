@@ -1,20 +1,12 @@
-import React from 'react';
-import { Constants } from '../../constants/constants';
+import { useSettingsStore } from '../app/settingsStore';
+import { useAlert } from './useAlert';
+import { useToast } from './useToast';
 
 import * as FileSystem from 'expo-file-system';
 import * as DocumentPicker from 'expo-document-picker';
+import { ToastAndroid } from 'react-native';
 
-import { Pressable, ToastAndroid } from 'react-native';
-import { CustomText } from '../custom-text/custom-text.component';
-import { Icon } from '../icon/icon.component';
-
-import { useSettingsStore } from '../../app/settingsStore';
-import { useToast } from '../../hooks/useToast';
-import { useAlert } from '../../hooks/useAlert';
-
-import { styles } from './settings.styles';
-
-export const ImportButton = () => {
+export const useImport = () => {
     const { motivations, importToStorage } = useSettingsStore();
     const alertCaller = useAlert();
     const toastCaller = useToast();
@@ -43,10 +35,15 @@ export const ImportButton = () => {
             if (motivations.length !== 0) {
                 alertCaller(
                     'Важно!',
-                    'Ваша база не пуста! Если вы хотите продолжить, то данные перепишутся',
+                    'Ваша база не пуста! Если вы выберите Дополнить, то данные добавятся в существующую базу, если Переписать, то данные перепишутся.',
                     [
                         {
-                            text: 'Продолжить',
+                            text: 'Дополнить',
+                            onPress: () => null,
+                            style: 'default',
+                        },
+                        {
+                            text: 'Переписать',
                             onPress: () => importToDB(content),
                             style: 'default',
                         },
@@ -88,24 +85,5 @@ export const ImportButton = () => {
         }
     };
 
-    return (
-        <Pressable
-            style={({ pressed }) => [
-                {
-                    backgroundColor: pressed
-                        ? 'rgba(0, 255, 255, 0.4)'
-                        : 'transparent',
-                },
-                styles.buttonContainer,
-            ]}
-            onPress={pickDocument}
-        >
-            <Icon
-                type={Constants.MATERIALCOMMUNITYICONS_ICON}
-                icon="database-import-outline"
-                size={Constants.MEDIUM_ICON_SIZE}
-            />
-            <CustomText style={styles.buttonText} text="Импорт" />
-        </Pressable>
-    );
+    return [pickDocument];
 };

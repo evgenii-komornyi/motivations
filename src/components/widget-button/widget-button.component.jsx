@@ -1,16 +1,16 @@
 import React from 'react';
 import { Constants } from '../../constants/constants';
 
-import { Pressable } from 'react-native';
+import { CustomButton } from '../custom-button/custom-button.component';
 import { CustomText } from '../custom-text/custom-text.component';
 import { Icon } from '../icon/icon.component';
 
 import { useSettingsStore } from '../../app/settingsStore';
 import { useAlert } from '../../hooks/useAlert';
 
-import { styles } from './settings.styles';
+import { styles } from '../../styles/globalStyle';
 
-export const SendToWidgetButton = () => {
+export const WidgetButton = () => {
     const { sendToWidget, activeMotivations } = useSettingsStore();
 
     const isDisabled = activeMotivations.length === 0;
@@ -49,19 +49,7 @@ export const SendToWidgetButton = () => {
     };
 
     return (
-        <Pressable
-            style={({ pressed }) => [
-                {
-                    backgroundColor: pressed
-                        ? 'rgba(0, 255, 255, 0.4)'
-                        : 'transparent',
-                },
-                styles.buttonContainer,
-                {
-                    backgroundColor: `${isDisabled ? '#bbb' : 'transparent'}`,
-                    borderColor: `${isDisabled ? 'red' : 'black'}`,
-                },
-            ]}
+        <CustomButton
             disabled={isDisabled}
             onPress={() => onSendToWidgetHandler()}
         >
@@ -71,6 +59,6 @@ export const SendToWidgetButton = () => {
                 size={Constants.MEDIUM_ICON_SIZE}
             />
             <CustomText style={styles.buttonText} text="Отправить виджету" />
-        </Pressable>
+        </CustomButton>
     );
 };

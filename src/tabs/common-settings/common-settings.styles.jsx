@@ -6,10 +6,4 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between',
         padding: 10,
     },
-    buttonsContainer: {
-        flex: 3,
-        justifyContent: 'center',
-        padding: 10,
-        paddingBottom: 100,
-    },
 });

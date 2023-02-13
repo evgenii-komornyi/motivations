@@ -1,36 +1,30 @@
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
+
 import { useSettingsStore } from '../../app/settingsStore';
 
 import { loaders } from '../../helpers/loader.helper';
-import { Loader } from '../loader/loader.component';
-import { ExportButton } from './export-button.component';
-import { ImportButton } from './import-button.component';
-import { SendToWidgetButton } from './send-to-widget-button.component';
+import { Loader } from '../../components/loader/loader.component';
 
-import { styles } from './settings.styles';
+import { ExportButton } from '../../components/export-button/export-button.component';
+import { ImportButton } from '../../components/import-button/import-button.component';
 
-export const Settings = () => {
-    const {
-        isImported,
-        fetchAllMotivations,
-        fetchAllActiveMotivations,
-        isSent,
-    } = useSettingsStore();
+import { styles } from './database-settings.styles';
+
+export const DatabaseSettings = () => {
+    const { isImported, fetchAllMotivations, isSent } = useSettingsStore();
 
     useEffect(() => {
         fetchAllMotivations();
-        fetchAllActiveMotivations();
-    }, [fetchAllActiveMotivations, fetchAllMotivations, isSent]);
+    }, [fetchAllMotivations, isSent]);
 
     return (
         <View style={styles.container}>
             {isImported && isSent ? (
-                <>
+                <View style={styles.buttonsContainer}>
                     <ImportButton />
                     <ExportButton />
-                    <SendToWidgetButton />
-                </>
+                </View>
             ) : (
                 <Loader sourceFile={loaders.importExport} />
             )}

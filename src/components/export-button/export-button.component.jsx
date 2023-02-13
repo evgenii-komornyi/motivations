@@ -2,8 +2,8 @@ import React from 'react';
 import { Constants } from '../../constants/constants';
 
 import * as FileSystem from 'expo-file-system';
-import { Pressable } from 'react-native';
 
+import { CustomButton } from '../custom-button/custom-button.component';
 import { CustomText } from '../custom-text/custom-text.component';
 import { Icon } from '../icon/icon.component';
 
@@ -12,7 +12,7 @@ import { useAlert } from '../../hooks/useAlert';
 
 import { generateFileName } from '../../helpers/generators.helper';
 
-import { styles } from './settings.styles';
+import { styles } from '../../styles/globalStyle';
 
 export const ExportButton = () => {
     const { motivations } = useSettingsStore();
@@ -106,28 +106,13 @@ export const ExportButton = () => {
     };
 
     return (
-        <Pressable
-            style={({ pressed }) => [
-                {
-                    backgroundColor: pressed
-                        ? 'rgba(0, 255, 255, 0.4)'
-                        : 'transparent',
-                },
-                styles.buttonContainer,
-                {
-                    backgroundColor: `${isDisabled ? '#bbb' : 'transparent'}`,
-                    borderColor: `${isDisabled ? 'red' : 'black'}`,
-                },
-            ]}
-            disabled={isDisabled}
-            onPress={exportDBToFile}
-        >
+        <CustomButton isDisabled={isDisabled} onPress={exportDBToFile}>
             <Icon
                 type={Constants.MATERIALCOMMUNITYICONS_ICON}
                 icon="database-export-outline"
                 size={Constants.MEDIUM_ICON_SIZE}
             />
             <CustomText style={styles.buttonText} text="Экспорт" />
-        </Pressable>
+        </CustomButton>
     );
 };
