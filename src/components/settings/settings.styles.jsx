@@ -19,4 +19,10 @@ export const styles = StyleSheet.create({
     buttonText: {
         paddingLeft: 10,
     },
+    tabbar: {
+        backgroundColor: '#000',
+    },
+    indicator: {
+        backgroundColor: '#ffeb3b',
+    },
 });

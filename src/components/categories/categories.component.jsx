@@ -16,7 +16,7 @@ export const Categories = () => {
     }, [categories, fetchCategories]);
 
     return (
-        <SafeAreaView style={{ flex: 1, marginTop: 10 }}>
+        <SafeAreaView style={{ flex: 1, marginTop: 3 }}>
             {isLoaded ? (
                 <FlatList
                     data={categories}
