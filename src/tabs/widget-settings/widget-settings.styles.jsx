@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         padding: 10,
-        paddingBottom: 100,
+        paddingBottom: 50,
     },
     countActiveMotivationsTitle: {
         fontSize: 20,
@@ -31,7 +31,6 @@ export const styles = StyleSheet.create({
     },
     count: {
         fontSize: 15,
-        paddingBottom: 20,
         fontStyle: 'italic',
     },
 });
