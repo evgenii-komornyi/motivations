@@ -40,7 +40,7 @@ export const MotivationsByCategory = () => {
     const navigate = useNavigate();
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 8 }}>
             {isLoaded ? (
                 <>
                     <Header
@@ -105,6 +105,7 @@ export const MotivationsByCategory = () => {
                             )}
                             keyExtractor={item => item._id}
                             style={{ marginTop: 10 }}
+                            contentContainerStyle={{ paddingBottom: 70 }}
                         />
                     ) : (
                         <View>

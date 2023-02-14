@@ -12,20 +12,10 @@ import { getUniqueCategories } from '../../helpers/categories.helper';
 import { styles } from './widget-settings.styles';
 
 export const WidgetSettings = () => {
-    const { fetchAllActiveMotivations, activeMotivations } = useSettingsStore();
+    const { activeMotivations } = useSettingsStore();
+    const { motivations } = useMotivationsStore();
 
-    const { motivations, fetchAllMotivations } = useMotivationsStore();
-
-    const [categories, setCategories] = useState([]);
-
-    useEffect(() => {
-        fetchAllActiveMotivations();
-        fetchAllMotivations();
-
-        if (activeMotivations.length !== 0) {
-            setCategories(getUniqueCategories(motivations));
-        }
-    }, [activeMotivations, motivations]);
+    const [categories] = useState(getUniqueCategories(motivations));
 
     const filterActivePhrasesByCategory = (array, category) =>
         array.filter(motivation => motivation.category === category);
