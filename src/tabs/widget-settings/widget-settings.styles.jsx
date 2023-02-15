@@ -20,13 +20,15 @@ export const styles = StyleSheet.create({
         borderBottomColor: '#000',
         borderBottomWidth: 1,
     },
-    gridCategories: {
+    categoriesContainer: {
         flex: 1,
+        flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
     },
     byCategory: {
         fontSize: 20,
+        padding: 10,
         fontWeight: 'bold',
     },
     count: {

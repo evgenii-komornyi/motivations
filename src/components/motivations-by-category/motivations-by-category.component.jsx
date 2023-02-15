@@ -105,7 +105,7 @@ export const MotivationsByCategory = () => {
                             )}
                             keyExtractor={item => item._id}
                             style={{ marginTop: 10 }}
-                            contentContainerStyle={{ paddingBottom: 70 }}
+                            contentContainerStyle={{ paddingBottom: 90 }}
                         />
                     ) : (
                         <View>
