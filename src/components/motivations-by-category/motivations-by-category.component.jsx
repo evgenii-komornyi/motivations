@@ -11,6 +11,7 @@ import { Item } from './item.component';
 import { Icon } from '../icon/icon.component';
 import { CustomText } from '../custom-text/custom-text.component';
 
+import { useCategoriesStore } from '../../app/categoriesStore';
 import { useMotivationsStore } from '../../app/motivationsStore';
 import { getCategoryTitleByName } from '../../helpers/categories.helper';
 
@@ -21,6 +22,8 @@ import { styles as globalStyles } from '../../styles/globalStyle';
 
 export const MotivationsByCategory = () => {
     const params = useParams();
+
+    const { categories } = useCategoriesStore();
 
     const {
         fetchMotivationsByCategory,
@@ -38,6 +41,14 @@ export const MotivationsByCategory = () => {
     }, [params.category]);
 
     const navigate = useNavigate();
+
+    const getCategoryTitleById = categoryId => {
+        const { category } = categories.find(
+            category => category.id === categoryId
+        );
+
+        return category;
+    };
 
     return (
         <SafeAreaView style={{ flex: 8 }}>
@@ -69,7 +80,7 @@ export const MotivationsByCategory = () => {
                             </Pressable>
                         }
                         centerComponent={{
-                            text: getCategoryTitleByName(params.category).text,
+                            text: getCategoryTitleById(params.category),
                             style: {
                                 color: '#fff',
                                 fontSize: 20,

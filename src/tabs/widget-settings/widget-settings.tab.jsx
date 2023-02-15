@@ -5,18 +5,15 @@ import { CustomText } from '../../components/custom-text/custom-text.component';
 import { WidgetButton } from '../../components/widget-button/widget-button.component';
 
 import { useSettingsStore } from '../../app/settingsStore';
-import { useMotivationsStore } from '../../app/motivationsStore';
-
-import { getUniqueCategories } from '../../helpers/categories.helper';
 
 import { styles } from './widget-settings.styles';
 import { CategoryItem } from './category-item';
+import { useCategoriesStore } from '../../app/categoriesStore';
 
 export const WidgetSettings = () => {
     const { activeMotivations } = useSettingsStore();
-    const { motivations } = useMotivationsStore();
 
-    const [categories] = useState(getUniqueCategories(motivations));
+    const { categories } = useCategoriesStore();
 
     const filterActivePhrasesByCategory = (array, category) =>
         array.filter(motivation => motivation.category === category);
@@ -42,7 +39,7 @@ export const WidgetSettings = () => {
                             length={
                                 filterActivePhrasesByCategory(
                                     activeMotivations,
-                                    item
+                                    item.id
                                 ).length
                             }
                         />

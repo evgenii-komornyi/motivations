@@ -1,7 +1,7 @@
 import create from 'zustand';
 import { devtools } from 'zustand/middleware';
 
-import { getUniqueCategories } from '../storage/motivation.storage';
+import { getCategories } from '../storage/motivation.storage';
 
 const categoriesStore = set => ({
     categories: [],
@@ -9,7 +9,7 @@ const categoriesStore = set => ({
 
     fetchCategories: async () => {
         try {
-            const categories = await getUniqueCategories();
+            const categories = await getCategories();
             set({ categories: categories, isLoaded: true });
         } catch (error) {
             set({ isLoaded: false });

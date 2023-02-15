@@ -25,4 +25,40 @@ export const Constants = {
     OCTICONS_ICON: 'octIcons',
     SIMPLELINESICONS_ICON: 'simpleLineIcons',
     ZOCIAL_ICON: 'zocial',
+    CATEGORY_1: {
+        id: 'category-1',
+        category: 'Category 1',
+        image: { uri: 'asset:/backgrounds/0.jpg' },
+        isVisible: true,
+    },
+    CATEGORY_2: {
+        id: 'category-2',
+        category: 'Category 2',
+        image: { uri: 'asset:/backgrounds/0.jpg' },
+        isVisible: true,
+    },
+    CATEGORY_3: {
+        id: 'category-3',
+        category: 'Category 3',
+        image: { uri: 'asset:/backgrounds/0.jpg' },
+        isVisible: true,
+    },
+    CATEGORY_4: {
+        id: 'category-4',
+        category: 'Category 4',
+        image: { uri: 'asset:/backgrounds/0.jpg' },
+        isVisible: true,
+    },
+    CATEGORY_5: {
+        id: 'category-5',
+        category: 'Category 5',
+        image: { uri: 'asset:/backgrounds/0.jpg' },
+        isVisible: true,
+    },
+    CATEGORY_6: {
+        id: 'category-6',
+        category: 'Category 6',
+        image: { uri: 'asset:/backgrounds/0.jpg' },
+        isVisible: true,
+    },
 };

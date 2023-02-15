@@ -23,6 +23,7 @@ export const NewMotivationForm = ({ category }) => {
         category: category,
         isActive: true,
     });
+
     const [isTooLong, setIsTooLong] = useState(false);
 
     const checkValueLength = (name, value) => {

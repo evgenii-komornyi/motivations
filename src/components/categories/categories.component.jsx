@@ -23,7 +23,7 @@ export const Categories = () => {
                     renderItem={({ item }) => <GridView data={item} />}
                     keyExtractor={(_, index) => index}
                     numColumns={2}
-                    key={(item, index) => `${item.category}-${index}`}
+                    key={item => item.id}
                 />
             ) : (
                 <Loader sourceFile={loaders.catHero} />

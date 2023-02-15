@@ -13,7 +13,7 @@ export const createMotivation = async motivations => {
     }
 };
 
-export const getUniqueCategories = async () => {
+export const getCategories = async () => {
     try {
         const categories = await readFromStorage(
             Constants.CATEGORIES_STORAGE_KEY
@@ -21,14 +21,16 @@ export const getUniqueCategories = async () => {
 
         if (categories === null) {
             await saveToStorage(Constants.CATEGORIES_STORAGE_KEY, [
-                { category: Constants.AFFIRMATION },
-                { category: Constants.LONELINESS },
-                { category: Constants.LOVE },
-                { category: Constants.MOTIVATION },
-                { category: Constants.QUOTES },
+                Constants.CATEGORY_1,
+                Constants.CATEGORY_2,
+                Constants.CATEGORY_3,
+                Constants.CATEGORY_4,
+                Constants.CATEGORY_5,
+                Constants.CATEGORY_6,
             ]);
         }
-        return categories;
+
+        return categories && categories.filter(category => category.isVisible);
     } catch (error) {
         console.warn(error);
     }
@@ -37,6 +39,7 @@ export const getUniqueCategories = async () => {
 export const getAllMotivations = async () => {
     try {
         const items = await readFromStorage(Constants.MOTIVATIONS_STORAGE_KEY);
+
         return items !== null ? items : [];
     } catch (error) {
         console.warn(error);
