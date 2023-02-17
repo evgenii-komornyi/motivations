@@ -30,7 +30,33 @@ export const getCategories = async () => {
             ]);
         }
 
-        return categories && categories.filter(category => category.isVisible);
+        return categories;
+    } catch (error) {
+        console.warn(error);
+    }
+};
+
+export const updateCategoryImage = async modifiedCategories => {
+    try {
+        const isSaved = await saveToStorage(
+            Constants.CATEGORIES_STORAGE_KEY,
+            modifiedCategories
+        );
+
+        return isSaved;
+    } catch (error) {
+        console.warn(error);
+    }
+};
+
+export const updateCategoryVisibility = async modifiedCategories => {
+    try {
+        const isSaved = await saveToStorage(
+            Constants.CATEGORIES_STORAGE_KEY,
+            modifiedCategories
+        );
+
+        return isSaved;
     } catch (error) {
         console.warn(error);
     }

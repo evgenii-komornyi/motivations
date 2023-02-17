@@ -13,7 +13,6 @@ import { CustomText } from '../custom-text/custom-text.component';
 
 import { useCategoriesStore } from '../../app/categoriesStore';
 import { useMotivationsStore } from '../../app/motivationsStore';
-import { getCategoryTitleByName } from '../../helpers/categories.helper';
 
 import { loaders } from '../../helpers/loader.helper';
 

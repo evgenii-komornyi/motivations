@@ -4,18 +4,27 @@ export const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        padding: 10,
+        paddingBottom: 60,
+        paddingTop: 10,
+        paddingLeft: 10,
+        paddingRight: 10,
     },
-    buttonContainer: {
+    image: {
         flex: 1,
-        justifyContent: 'center',
-        padding: 10,
-        paddingBottom: 50,
-    },
-    categoriesContainer: {
-        flex: 1,
-        flexDirection: 'row',
+        width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    text: {
+        color: 'white',
+        fontSize: 20,
+        lineHeight: 30,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        backgroundColor: '#000000c0',
+    },
+    icon: {
+        textAlign: 'center',
+        backgroundColor: '#000000c0',
     },
 });

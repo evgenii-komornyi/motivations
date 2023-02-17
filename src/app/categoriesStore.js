@@ -1,7 +1,12 @@
 import create from 'zustand';
 import { devtools } from 'zustand/middleware';
+import { modifyCategories } from '../helpers/categories.helper';
 
-import { getCategories } from '../storage/motivation.storage';
+import {
+    getCategories,
+    updateCategoryImage,
+    updateCategoryVisibility,
+} from '../storage/motivation.storage';
 
 const categoriesStore = set => ({
     categories: [],
@@ -13,6 +18,39 @@ const categoriesStore = set => ({
             set({ categories: categories, isLoaded: true });
         } catch (error) {
             set({ isLoaded: false });
+        }
+    },
+    updateImage: async (id, imageUri) => {
+        try {
+            const modifiedCategories = await modifyCategories(id, {
+                image: imageUri,
+            });
+
+            const isSaved = await updateCategoryImage(modifiedCategories);
+
+            if (isSaved) {
+                set({ categories: modifiedCategories });
+            }
+        } catch (error) {
+            console.warn(error);
+        }
+    },
+    updateCategory: async (id, newCategory) => {
+        console.log(`Update: ${id}, ${newCategory}`);
+    },
+    updateCategoryVisibility: async (id, visibility) => {
+        try {
+            const modifiedCategories = await modifyCategories(id, {
+                isVisible: visibility.isVisible,
+            });
+
+            const isSaved = await updateCategoryVisibility(modifiedCategories);
+
+            if (isSaved) {
+                set({ categories: modifiedCategories });
+            }
+        } catch (error) {
+            console.warn(error);
         }
     },
 });
