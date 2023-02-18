@@ -25,7 +25,7 @@ export const EditForm = ({ item, closeForm, category }) => {
     const [isTooLong, setIsTooLong] = useState(false);
 
     const checkValueLength = value => {
-        if (value.length === 200) {
+        if (value.length >= 200) {
             setIsTooLong(true);
         } else {
             setIsTooLong(false);

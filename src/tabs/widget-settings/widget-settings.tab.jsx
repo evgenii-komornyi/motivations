@@ -3,13 +3,14 @@ import React, { useState } from 'react';
 import { FlatList, SafeAreaView, View } from 'react-native';
 import { CustomText } from '../../components/custom-text/custom-text.component';
 import { WidgetButton } from '../../components/widget-button/widget-button.component';
+import { CategoryItem } from './category-item';
 
 import { useSettingsStore } from '../../app/settingsStore';
-
-import { styles } from './widget-settings.styles';
-import { CategoryItem } from './category-item';
 import { useCategoriesStore } from '../../app/categoriesStore';
 
+import { sortCategories } from '../../helpers/categories.helper';
+
+import { styles } from './widget-settings.styles';
 export const WidgetSettings = () => {
     const { activeMotivations } = useSettingsStore();
 
@@ -20,19 +21,13 @@ export const WidgetSettings = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <View
-                style={{
-                    flex: 3,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                }}
-            >
+            <View style={styles.wrapper}>
                 <CustomText
                     style={styles.countActiveMotivationsTitle}
                     text="Количество активных фраз в каждой категории"
                 />
                 <FlatList
-                    data={categories}
+                    data={sortCategories(categories)}
                     renderItem={({ item }) => (
                         <CategoryItem
                             data={item}

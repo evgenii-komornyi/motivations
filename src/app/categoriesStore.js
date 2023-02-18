@@ -4,6 +4,7 @@ import { modifyCategories } from '../helpers/categories.helper';
 
 import {
     getCategories,
+    updateCategory,
     updateCategoryImage,
     updateCategoryVisibility,
 } from '../storage/motivation.storage';
@@ -15,7 +16,8 @@ const categoriesStore = set => ({
     fetchCategories: async () => {
         try {
             const categories = await getCategories();
-            set({ categories: categories, isLoaded: true });
+
+            set({ categories: categories ? categories : [], isLoaded: true });
         } catch (error) {
             set({ isLoaded: false });
         }
@@ -36,7 +38,19 @@ const categoriesStore = set => ({
         }
     },
     updateCategory: async (id, newCategory) => {
-        console.log(`Update: ${id}, ${newCategory}`);
+        try {
+            const modifiedCategories = await modifyCategories(id, {
+                category: newCategory.category,
+            });
+
+            const isSaved = await updateCategory(modifiedCategories);
+
+            if (isSaved) {
+                set({ categories: modifiedCategories });
+            }
+        } catch (error) {
+            console.warn(error);
+        }
     },
     updateCategoryVisibility: async (id, visibility) => {
         try {

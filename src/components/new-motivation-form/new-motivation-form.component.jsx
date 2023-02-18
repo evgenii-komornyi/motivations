@@ -27,7 +27,7 @@ export const NewMotivationForm = ({ category }) => {
     const [isTooLong, setIsTooLong] = useState(false);
 
     const checkValueLength = (name, value) => {
-        if (name === 'title' && value.length === 200) {
+        if (name === 'title' && value.length >= 200) {
             setIsTooLong(true);
         } else {
             setIsTooLong(false);

@@ -3,7 +3,7 @@ import { readFromStorage, saveToStorage } from '../helpers/storage.helper';
 
 export const createMotivation = async motivations => {
     try {
-        await saveToStorage(Constants.MOTIVATIONS_STORAGE_KEY, motivations);
+        await save(Constants.MOTIVATIONS_STORAGE_KEY, motivations);
 
         return true;
     } catch (error) {
@@ -20,7 +20,7 @@ export const getCategories = async () => {
         );
 
         if (categories === null) {
-            await saveToStorage(Constants.CATEGORIES_STORAGE_KEY, [
+            await save(Constants.CATEGORIES_STORAGE_KEY, [
                 Constants.CATEGORY_1,
                 Constants.CATEGORY_2,
                 Constants.CATEGORY_3,
@@ -29,6 +29,9 @@ export const getCategories = async () => {
                 Constants.CATEGORY_6,
             ]);
         }
+        // else {
+        //     categories.map(category => console.log(category));
+        // }
 
         return categories;
     } catch (error) {
@@ -36,29 +39,39 @@ export const getCategories = async () => {
     }
 };
 
-export const updateCategoryImage = async modifiedCategories => {
+export const updateCategory = async modifiedCategories => {
     try {
-        const isSaved = await saveToStorage(
-            Constants.CATEGORIES_STORAGE_KEY,
-            modifiedCategories
-        );
+        await save(Constants.CATEGORIES_STORAGE_KEY, modifiedCategories);
 
-        return isSaved;
+        return true;
     } catch (error) {
         console.warn(error);
+
+        return false;
+    }
+};
+
+export const updateCategoryImage = async modifiedCategories => {
+    try {
+        await save(Constants.CATEGORIES_STORAGE_KEY, modifiedCategories);
+
+        return true;
+    } catch (error) {
+        console.warn(error);
+
+        return false;
     }
 };
 
 export const updateCategoryVisibility = async modifiedCategories => {
     try {
-        const isSaved = await saveToStorage(
-            Constants.CATEGORIES_STORAGE_KEY,
-            modifiedCategories
-        );
+        await save(Constants.CATEGORIES_STORAGE_KEY, modifiedCategories);
 
-        return isSaved;
+        return true;
     } catch (error) {
         console.warn(error);
+
+        return false;
     }
 };
 
@@ -86,51 +99,59 @@ export const getMotivationsByCategory = async category => {
 
 export const updateMotivation = async modifiedMotivations => {
     try {
-        const isSaved = await saveToStorage(
-            Constants.MOTIVATIONS_STORAGE_KEY,
-            modifiedMotivations
-        );
-        return isSaved;
+        await save(Constants.MOTIVATIONS_STORAGE_KEY, modifiedMotivations);
+
+        return true;
     } catch (error) {
         console.warn(error);
+
+        return false;
     }
 };
 
 export const updateActivation = async modifiedMotivations => {
     try {
-        const isSaved = await saveToStorage(
-            Constants.MOTIVATIONS_STORAGE_KEY,
-            modifiedMotivations
-        );
-        return isSaved;
+        await save(Constants.MOTIVATIONS_STORAGE_KEY, modifiedMotivations);
+
+        return true;
     } catch (error) {
         console.warn(error);
+
+        return false;
     }
 };
 
 export const deleteMotivation = async modifiedMotivations => {
     try {
-        const isSaved = await saveToStorage(
+        const isSaved = await save(
             Constants.MOTIVATIONS_STORAGE_KEY,
             modifiedMotivations
         );
-        return isSaved;
+
+        return true;
     } catch (error) {
         console.warn(error);
+
+        return false;
     }
 };
 
 export const importMotivationsFromDatabase = async database => {
     try {
-        const isSaved = await saveToStorage(
-            Constants.MOTIVATIONS_STORAGE_KEY,
-            database
-        );
+        await save(Constants.MOTIVATIONS_STORAGE_KEY, database);
 
-        return isSaved;
+        return true;
     } catch (error) {
         console.warn(error);
 
         return false;
+    }
+};
+
+const save = async (key, value) => {
+    try {
+        await saveToStorage(key, value);
+    } catch (error) {
+        console.warn(error);
     }
 };

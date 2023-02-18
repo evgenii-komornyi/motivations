@@ -12,9 +12,11 @@ import { useCreateRef } from '../../hooks/useCreateRef';
 
 import { styles } from './common-settings.styles';
 import { useToast } from '../../hooks/useToast';
+import { EditCategoryForm } from '../../components/edit-form/edit-category-form.component';
 
 export const CategoryItem = ({ data }) => {
     const [image, setImage] = useState(data.image);
+    const [isEdit, setIsEdit] = useState(false);
     const { updateCategoryVisibility, updateImage } = useCategoriesStore();
 
     const toastCaller = useToast();
@@ -91,33 +93,35 @@ export const CategoryItem = ({ data }) => {
         }, 1);
     };
 
+    const onLongPressHandler = () => {
+        setIsEdit(true);
+    };
+
     return (
         <View
-            style={{
-                flex: 1,
-                flexDirection: 'row',
-                alignItems: 'center',
-                alignContent: 'center',
-                padding: 10,
-                borderRadius: 20,
-                marginBottom: 5,
-                borderWidth: 1,
-                borderColor: data.isVisible
-                    ? 'rgba(154, 205, 50, 0.8)'
-                    : 'rgba(255, 165, 0, 0.8)',
-                backgroundColor: data.isVisible
-                    ? 'rgba(154, 205, 50, 0.8)'
-                    : 'rgba(255, 165, 0, 0.4)',
-            }}
+            style={[
+                {
+                    borderColor: isVisible
+                        ? 'rgba(154, 205, 50, 0.8)'
+                        : 'rgba(255, 165, 0, 0.8)',
+                    backgroundColor: isVisible
+                        ? 'rgba(154, 205, 50, 0.8)'
+                        : 'rgba(255, 165, 0, 0.4)',
+                },
+                styles.itemContainer,
+            ]}
         >
-            <View style={{ width: 100, height: 100 }}>
+            <View style={styles.imageContainer}>
                 <ImageBackground
                     source={image}
                     imageStyle={{ borderRadius: 10 }}
                     style={styles.image}
                     resizeMode="cover"
                 >
-                    <Pressable onPress={choosePicture}>
+                    <Pressable
+                        style={styles.chooseButtonContainer}
+                        onPress={choosePicture}
+                    >
                         <Icon
                             icon="image-search-outline"
                             type={Constants.MATERIALCOMMUNITYICONS_ICON}
@@ -127,22 +131,15 @@ export const CategoryItem = ({ data }) => {
                     </Pressable>
                 </ImageBackground>
             </View>
-            <View
-                style={{
-                    flex: 1,
-                    justifyContent: 'center',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                }}
-            >
-                <CustomText style={styles.text} text={data.category} />
-                <View
-                    style={{
-                        flex: 0.8,
-                        flexDirection: 'row',
-                        justifyContent: 'flex-end',
-                    }}
-                >
+            <View style={styles.infoContainer}>
+                <Pressable onLongPress={onLongPressHandler}>
+                    {!isEdit ? (
+                        <CustomText style={styles.text} text={data.category} />
+                    ) : (
+                        <EditCategoryForm item={data} closeForm={setIsEdit} />
+                    )}
+                </Pressable>
+                <View style={styles.visibilityIconContainer}>
                     <Pressable onPress={switchVisibility}>
                         <Icon
                             icon={`${isVisible ? 'eye-off' : 'eye'}-outline`}

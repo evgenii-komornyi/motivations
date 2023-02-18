@@ -1,7 +1,9 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Header } from 'react-native-elements';
+
 import { Categories } from '../components/categories/categories.component';
+
 import { useOnBackPress } from '../hooks/useOnBackPress';
 
 export const CatalogScreen = () => {
