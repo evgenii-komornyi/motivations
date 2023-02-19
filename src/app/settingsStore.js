@@ -13,6 +13,7 @@ import {
 const settingsStore = (set, get) => ({
     motivations: [],
     isImported: true,
+    isLoaded: false,
     activeMotivations: [],
     isSent: true,
 
@@ -26,9 +27,11 @@ const settingsStore = (set, get) => ({
             set(state => ({
                 ...state,
                 activeMotivations: allActiveMotivations,
+                isLoaded: true,
             }));
         } catch (error) {
             console.warn(error);
+            set({ isLoaded: false });
         }
     },
     sendToWidget: () => {
@@ -47,9 +50,14 @@ const settingsStore = (set, get) => ({
     },
 
     fetchAllMotivations: async () => {
-        const all = await getAllMotivations();
+        try {
+            const all = await getAllMotivations();
 
-        set({ motivations: all });
+            set({ motivations: all, isLoaded: true });
+        } catch (error) {
+            console.warn(error);
+            set({ isLoaded: false });
+        }
     },
     importToStorage: async content => {
         set({ isImported: false });

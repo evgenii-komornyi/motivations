@@ -14,7 +14,7 @@ export const Categories = () => {
 
     useEffect(() => {
         fetchCategories();
-    }, [fetchCategories, isLoaded]);
+    }, [isLoaded]);
 
     return (
         <SafeAreaView style={{ flex: 1, marginTop: 3 }}>

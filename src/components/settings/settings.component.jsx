@@ -10,12 +10,17 @@ export const Settings = () => {
         useSettingsTabs();
 
     const { fetchAllMotivations } = useMotivationsStore();
-    const { fetchAllActiveMotivations } = useSettingsStore();
+    const { fetchAllActiveMotivations, activeMotivations } = useSettingsStore();
 
     useEffect(() => {
-        fetchAllActiveMotivations();
-        fetchAllMotivations();
-    }, []);
+        let isLoaded = false;
+
+        if (!isLoaded) {
+            fetchAllActiveMotivations();
+            fetchAllMotivations();
+            isLoaded = true;
+        }
+    }, [activeMotivations]);
 
     return (
         <TabView

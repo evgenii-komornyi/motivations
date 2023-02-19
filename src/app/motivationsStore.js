@@ -9,6 +9,7 @@ import {
     updateActivation,
     deleteMotivation,
     getAllMotivations,
+    propagateVisibility,
 } from '../storage/motivation.storage';
 
 const motivationsStore = (set, get) => ({
@@ -104,6 +105,38 @@ const motivationsStore = (set, get) => ({
                 setTimeout(() => {
                     set({ isSending: false });
                 }, 1000);
+            }
+        } catch (error) {
+            console.warn(error);
+        }
+    },
+    propagateVisibility: async (categoryName, visibility) => {
+        try {
+            const allMotivations = await getAllMotivations();
+
+            const motivationsByCategory = allMotivations.filter(
+                motivation => motivation.category === categoryName
+            );
+
+            if (motivationsByCategory.length !== 0) {
+                const modifiedMotivations = motivationsByCategory.map(
+                    motivation => ({ ...motivation, isActive: visibility })
+                );
+
+                const removedExistsMotivations = allMotivations.filter(
+                    motivation => motivation.category !== categoryName
+                );
+
+                const newMotivations = [
+                    ...removedExistsMotivations,
+                    ...modifiedMotivations,
+                ];
+
+                const isSaved = await propagateVisibility(newMotivations);
+
+                if (isSaved) {
+                    set({ motivations: newMotivations });
+                }
             }
         } catch (error) {
             console.warn(error);

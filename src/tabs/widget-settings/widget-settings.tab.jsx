@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 
 import { FlatList, SafeAreaView, View } from 'react-native';
 import { CustomText } from '../../components/custom-text/custom-text.component';
