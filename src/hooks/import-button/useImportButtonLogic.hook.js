@@ -6,11 +6,13 @@ import { useSettingsStore } from '../../app/settingsStore';
 
 import { useAlert } from '../common/useAlert.hook';
 import { useToast } from '../common/useToast.hook';
+import { useNavigate } from 'react-router-native';
 
 export const useImport = () => {
     const { motivations, importToStorage, categories } = useSettingsStore();
     const alertCaller = useAlert();
     const toastCaller = useToast();
+    const navigate = useNavigate();
 
     const pickDocument = async () => {
         try {
@@ -69,6 +71,7 @@ export const useImport = () => {
                     25,
                     50
                 );
+                navigate('/');
             }, 4000);
         } else {
             ToastAndroid.showWithGravityAndOffset(

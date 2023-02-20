@@ -119,11 +119,7 @@ export const MotivationsByCategory = () => {
                         />
                     ) : (
                         <View>
-                            <CustomText
-                                style={styles.category}
-                                text="Вы - новый пользователь! Добавьте свои фразы в
-                                базу!"
-                            />
+                            <CustomText style={styles.category} text="Пусто!" />
                         </View>
                     )}
                     <ModalWindow
