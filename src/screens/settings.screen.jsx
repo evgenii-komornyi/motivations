@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-native';
+import { Constants } from '../constants/constants';
 
 import { Header } from 'react-native-elements';
 import { Pressable } from 'react-native';
@@ -7,8 +8,8 @@ import { Icon } from '../components/icon/icon.component';
 
 import { Settings } from '../components/settings/settings.component';
 
-import { useOnBackPress } from '../hooks/useOnBackPress';
-import { Constants } from '../constants/constants';
+import { useOnBackPress } from '../hooks/common/useOnBackPress.hook';
+
 import { styles } from '../styles/globalStyle';
 
 export const SettingsScreen = () => {

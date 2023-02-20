@@ -1,47 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Constants } from '../../constants/constants';
 
 import { Pressable, TextInput, View } from 'react-native';
 import { Icon } from '../icon/icon.component';
 
-import { useCategoriesStore } from '../../app/categoriesStore';
+import { useEditCategoryLogic } from '../../hooks/edit-form/useEditCategoryLogic.hook';
 
 import { styles } from './edit-category-form.styles';
 
 export const EditCategoryForm = ({ item, closeForm }) => {
-    const [categoryName, setCategoryName] = useState('');
-
-    const { updateCategory } = useCategoriesStore();
-
-    useEffect(() => {
-        setCategoryName(item.category);
-
-        return () => {
-            setCategoryName('');
-        };
-    }, []);
-
-    const [isTooLong, setIsTooLong] = useState(false);
-
-    const checkValueLength = value => {
-        if (value.length >= 20) {
-            setIsTooLong(true);
-        } else {
-            setIsTooLong(false);
-        }
-    };
-
-    const handleChange = value => {
-        setCategoryName(value);
-        checkValueLength(value);
-    };
-
-    const isButtonDisabled = categoryName === '';
-
-    const handleEdit = () => {
-        updateCategory(item.id, { category: categoryName });
-        closeForm(false);
-    };
+    const [
+        categoryName,
+        isTooLong,
+        isButtonDisabled,
+        handleChange,
+        handleEdit,
+    ] = useEditCategoryLogic(item, closeForm);
 
     return (
         <View style={styles.formContainer}>

@@ -1,12 +1,15 @@
 import React from 'react';
+import { Constants } from '../../constants/constants';
+
 import { ImageBackground, Pressable, View } from 'react-native';
 import { CustomText } from '../../components/custom-text/custom-text.component';
 import { Icon } from '../../components/icon/icon.component';
-import { Constants } from '../../constants/constants';
+
+import { EditCategoryForm } from '../../components/edit-form/edit-category-form.component';
+
+import { useCategoryLogic } from '../../hooks/categories-tab/useCategoryLogic.hook';
 
 import { styles } from './common-settings.styles';
-import { EditCategoryForm } from '../../components/edit-form/edit-category-form.component';
-import { useCategoryLogic } from '../../hooks/useCategoryLogic';
 
 export const CategoryItem = ({ data }) => {
     const [

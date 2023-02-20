@@ -3,10 +3,11 @@ import { useState } from 'react';
 import * as FileSystem from 'expo-file-system';
 import * as DocumentPicker from 'expo-document-picker';
 
-import { useCategoriesStore } from '../app/categoriesStore';
-import { useToast } from './useToast';
-import { useCreateRef } from './useCreateRef';
-import { useMotivationsStore } from '../app/motivationsStore';
+import { useCategoriesStore } from '../../app/categoriesStore';
+import { useMotivationsStore } from '../../app/motivationsStore';
+
+import { useToast } from '../common/useToast.hook';
+import { useCreateRef } from '../common/useCreateRef.hook';
 
 export const useCategoryLogic = data => {
     const [image, setImage] = useState(data.image);

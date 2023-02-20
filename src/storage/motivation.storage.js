@@ -31,7 +31,6 @@ export const getCategories = async () => {
             Constants.CATEGORIES_STORAGE_KEY
         );
 
-        console.log(categoriesInStorage);
         if (categoriesInStorage === null) {
             await save(Constants.CATEGORIES_STORAGE_KEY, [
                 Constants.CATEGORY_1,
@@ -195,9 +194,10 @@ export const deleteMotivation = async modifiedMotivations => {
     }
 };
 
-export const importMotivationsFromDatabase = async database => {
+export const importDataToDatabase = async ({ categories, motivations }) => {
     try {
-        await save(Constants.MOTIVATIONS_STORAGE_KEY, database);
+        await save(Constants.CATEGORIES_STORAGE_KEY, categories);
+        await save(Constants.MOTIVATIONS_STORAGE_KEY, motivations);
 
         return true;
     } catch (error) {

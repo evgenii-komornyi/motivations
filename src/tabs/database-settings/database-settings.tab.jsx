@@ -16,7 +16,7 @@ export const DatabaseSettings = () => {
 
     useEffect(() => {
         fetchAllMotivations();
-    }, [isSent]);
+    }, []);
 
     return (
         <View style={styles.container}>

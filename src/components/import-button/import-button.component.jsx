@@ -5,7 +5,7 @@ import { CustomButton } from '../custom-button/custom-button.component';
 import { CustomText } from '../custom-text/custom-text.component';
 import { Icon } from '../icon/icon.component';
 
-import { useImport } from '../../hooks/useImport';
+import { useImport } from '../../hooks/import-button/useImportButtonLogic.hook';
 
 import { styles } from '../../styles/globalStyle';
 

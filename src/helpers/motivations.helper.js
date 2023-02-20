@@ -15,3 +15,21 @@ export const modifyMotivations = async (category, id, modifiedField) => {
 
     return [...removedExistsMotivation, modifiedObject];
 };
+
+export const modifyToPropagateVisibility = async (
+    motivationsByCategory,
+    visibility,
+    categoryName,
+    allMotivations
+) => {
+    const modifiedMotivations = motivationsByCategory.map(motivation => ({
+        ...motivation,
+        isActive: visibility,
+    }));
+
+    const removedExistsMotivations = allMotivations.filter(
+        motivation => motivation.category !== categoryName
+    );
+
+    return [...removedExistsMotivations, ...modifiedMotivations];
+};

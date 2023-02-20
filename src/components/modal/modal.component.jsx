@@ -4,7 +4,7 @@ import { Constants } from '../../constants/constants';
 import { Modal, Pressable, View } from 'react-native';
 import { Icon } from '../icon/icon.component';
 
-import { useAlert } from '../../hooks/useAlert';
+import { useAlert } from '../../hooks/common/useAlert.hook';
 
 import { styles } from './modal.styles';
 

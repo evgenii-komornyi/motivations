@@ -6,12 +6,14 @@ import { NativeModules } from 'react-native';
 const { SharedStorage } = NativeModules;
 
 import {
-    importMotivationsFromDatabase,
+    importDataToDatabase,
     getAllMotivations,
+    getCategories,
 } from '../storage/motivation.storage';
 
 const settingsStore = (set, get) => ({
     motivations: [],
+    categories: [],
     isImported: true,
     isLoaded: false,
     activeMotivations: [],
@@ -48,7 +50,6 @@ const settingsStore = (set, get) => ({
             }, 4000);
         }
     },
-
     fetchAllMotivations: async () => {
         try {
             const all = await getAllMotivations();
@@ -59,12 +60,19 @@ const settingsStore = (set, get) => ({
             set({ isLoaded: false });
         }
     },
+    fetchAllCategories: async () => {
+        try {
+            const allCategories = await getCategories();
+
+            set({ categories: allCategories });
+        } catch (error) {
+            console.warn(error);
+        }
+    },
     importToStorage: async content => {
         set({ isImported: false });
         try {
-            const isSaved = await importMotivationsFromDatabase(
-                JSON.parse(content)
-            );
+            const isSaved = await importDataToDatabase(JSON.parse(content));
 
             if (isSaved) {
                 setTimeout(() => {

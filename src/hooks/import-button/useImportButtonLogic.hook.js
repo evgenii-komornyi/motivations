@@ -1,13 +1,14 @@
-import { useSettingsStore } from '../app/settingsStore';
-import { useAlert } from './useAlert';
-import { useToast } from './useToast';
-
 import * as FileSystem from 'expo-file-system';
 import * as DocumentPicker from 'expo-document-picker';
 import { ToastAndroid } from 'react-native';
 
+import { useSettingsStore } from '../../app/settingsStore';
+
+import { useAlert } from '../common/useAlert.hook';
+import { useToast } from '../common/useToast.hook';
+
 export const useImport = () => {
-    const { motivations, importToStorage } = useSettingsStore();
+    const { motivations, importToStorage, categories } = useSettingsStore();
     const alertCaller = useAlert();
     const toastCaller = useToast();
 
@@ -32,7 +33,7 @@ export const useImport = () => {
                 return;
             }
 
-            if (motivations.length !== 0) {
+            if (motivations.length !== 0 && categories.length !== 0) {
                 alertCaller(
                     'Важно!',
                     'Ваша база не пуста! Если вы продолжите, то данные перепишутся.',

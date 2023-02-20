@@ -2,7 +2,8 @@ import React from 'react';
 import { View } from 'react-native';
 
 import { MotivationsByCategory } from '../components/motivations-by-category/motivations-by-category.component';
-import { useOnBackPress } from '../hooks/useOnBackPress';
+
+import { useOnBackPress } from '../hooks/common/useOnBackPress.hook';
 
 export const CategoryScreen = () => {
     useOnBackPress();

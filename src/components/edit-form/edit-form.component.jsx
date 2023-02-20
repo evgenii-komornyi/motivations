@@ -1,48 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Constants } from '../../constants/constants';
 
 import { Pressable, TextInput, View } from 'react-native';
 import { CustomText } from '../custom-text/custom-text.component';
 import { Icon } from '../icon/icon.component';
 
-import { useMotivationsStore } from '../../app/motivationsStore';
+import { useEditMotivationLogic } from '../../hooks/edit-form/useEditMotivationLogic.hook';
 
 import { styles } from './edit-form.styles';
 
 export const EditForm = ({ item, closeForm, category }) => {
-    const [title, setTitle] = useState('');
-
-    const { updateMotivation } = useMotivationsStore();
-
-    useEffect(() => {
-        setTitle(item.title);
-
-        return () => {
-            setTitle('');
-        };
-    }, []);
-
-    const [isTooLong, setIsTooLong] = useState(false);
-
-    const checkValueLength = value => {
-        if (value.length >= 200) {
-            setIsTooLong(true);
-        } else {
-            setIsTooLong(false);
-        }
-    };
-
-    const handleChange = value => {
-        setTitle(value);
-        checkValueLength(value);
-    };
-
-    const isButtonDisabled = title === '';
-
-    const handleSave = () => {
-        updateMotivation(item._id, { title: title }, category);
-        closeForm(false);
-    };
+    const [title, isTooLong, isButtonDisabled, handleChange, handleSave] =
+        useEditMotivationLogic(item, closeForm, category);
 
     return (
         <View style={styles.formContainer}>

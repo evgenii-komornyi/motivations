@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { FlatList, SafeAreaView, View } from 'react-native';
 import { CustomText } from '../../components/custom-text/custom-text.component';
@@ -11,6 +11,7 @@ import { useCategoriesStore } from '../../app/categoriesStore';
 import { sortCategories } from '../../helpers/categories.helper';
 
 import { styles } from './widget-settings.styles';
+
 export const WidgetSettings = () => {
     const { activeMotivations } = useSettingsStore();
 

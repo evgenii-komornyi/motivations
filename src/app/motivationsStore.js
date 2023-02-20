@@ -1,6 +1,9 @@
 import create from 'zustand';
 import { devtools } from 'zustand/middleware';
-import { modifyMotivations } from '../helpers/motivations.helper';
+import {
+    modifyMotivations,
+    modifyToPropagateVisibility,
+} from '../helpers/motivations.helper';
 
 import {
     createMotivation,
@@ -24,7 +27,7 @@ const motivationsStore = (set, get) => ({
     fetchAllMotivations: async () => {
         const allMotivations = await getAllMotivations();
 
-        set({ motivations: allMotivations });
+        set({ motivations: allMotivations, isLoaded: true });
     },
     fetchMotivationsByCategory: async category => {
         try {
@@ -79,6 +82,7 @@ const motivationsStore = (set, get) => ({
                         item => item.category === category
                     ),
                 });
+
                 setTimeout(() => {
                     set({ isSending: false });
                 }, 1000);
@@ -96,12 +100,14 @@ const motivationsStore = (set, get) => ({
             });
 
             const isSaved = await updateActivation(modifiedMotivations);
+
             if (isSaved) {
                 set({
                     motivations: modifiedMotivations.filter(
                         item => item.category === category
                     ),
                 });
+
                 setTimeout(() => {
                     set({ isSending: false });
                 }, 1000);
@@ -119,18 +125,12 @@ const motivationsStore = (set, get) => ({
             );
 
             if (motivationsByCategory.length !== 0) {
-                const modifiedMotivations = motivationsByCategory.map(
-                    motivation => ({ ...motivation, isActive: visibility })
+                const newMotivations = await modifyToPropagateVisibility(
+                    motivationsByCategory,
+                    visibility,
+                    categoryName,
+                    allMotivations
                 );
-
-                const removedExistsMotivations = allMotivations.filter(
-                    motivation => motivation.category !== categoryName
-                );
-
-                const newMotivations = [
-                    ...removedExistsMotivations,
-                    ...modifiedMotivations,
-                ];
 
                 const isSaved = await propagateVisibility(newMotivations);
 

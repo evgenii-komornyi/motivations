@@ -4,7 +4,7 @@ import { Header } from 'react-native-elements';
 
 import { Categories } from '../components/categories/categories.component';
 
-import { useOnBackPress } from '../hooks/useOnBackPress';
+import { useOnBackPress } from '../hooks/common/useOnBackPress.hook';
 
 export const CatalogScreen = () => {
     useOnBackPress();
