@@ -39,7 +39,7 @@ public class WidgetService {
     }
 
     public static Bitmap getImageByCategory(String motivationCategory, Context context) {
-        File dir = context.getFilesDir();
+        File dir = context.getCacheDir();
         File categoriesDir = new File(dir + "/categories");
 
         File[] list = null;

@@ -19,44 +19,28 @@ export const useCategoryLogic = data => {
 
     const choosePicture = async () => {
         try {
-            const { name, mimeType, type, uri } =
-                await DocumentPicker.getDocumentAsync({});
-
-            if (type === 'cancel') {
-                toastCaller('Файл не выбран!');
-
-                return;
-            }
-
-            if (
-                mimeType !== 'image/jpeg' &&
-                mimeType !== 'image/png' &&
-                mimeType !== 'image/x-png' &&
-                mimeType !== 'image/gif'
-            ) {
-                toastCaller('Файл не является картинкой! Выберите картинку!');
-
-                return;
-            }
+            const { name, uri } = await pickDocument();
 
             const splitted = name.split('.');
 
             const extension = splitted[splitted.length - 1];
 
-            const { exists } = await FileSystem.getInfoAsync(
-                FileSystem.documentDirectory + 'categories/'
+            const categoriesDirectory = `${FileSystem.documentDirectory}categories/`;
+
+            const { exists: isDirectoryExists } = await FileSystem.getInfoAsync(
+                categoriesDirectory
             );
 
-            if (!exists) {
-                await FileSystem.makeDirectoryAsync(
-                    FileSystem.documentDirectory + 'categories/'
-                );
+            if (!isDirectoryExists) {
+                await FileSystem.makeDirectoryAsync(categoriesDirectory, {
+                    intermediates: true,
+                });
             }
 
-            await FileSystem.copyAsync({
-                from: uri,
-                to: `${FileSystem.documentDirectory}categories/${data.id}.${extension}`,
-            });
+            await copyFile(
+                uri,
+                `${categoriesDirectory}${data.id}.${extension}`
+            );
 
             const dir = await FileSystem.readDirectoryAsync(
                 FileSystem.documentDirectory + 'categories/'
@@ -70,9 +54,44 @@ export const useCategoryLogic = data => {
 
             setImage(imageUri);
             updateImage(data.id, imageUri);
+
+            await FileSystem.deleteAsync(
+                FileSystem.cacheDirectory + 'DocumentPicker/'
+            );
         } catch (error) {
             console.warn(error);
         }
+    };
+
+    const pickDocument = async () => {
+        const { name, mimeType, type, uri } =
+            await DocumentPicker.getDocumentAsync({});
+
+        if (type === 'cancel') {
+            toastCaller('Файл не выбран!');
+
+            return;
+        }
+
+        if (
+            mimeType !== 'image/jpeg' &&
+            mimeType !== 'image/png' &&
+            mimeType !== 'image/x-png' &&
+            mimeType !== 'image/gif'
+        ) {
+            toastCaller('Файл не является картинкой! Выберите картинку!');
+
+            return;
+        }
+
+        return { name, uri };
+    };
+
+    const copyFile = async (from, to) => {
+        await FileSystem.copyAsync({
+            from: from,
+            to: to,
+        });
     };
 
     const [isVisible, setIsVisible] = useState(data.isVisible);
