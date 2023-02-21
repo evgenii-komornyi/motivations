@@ -1,4 +1,6 @@
 import { useSettingsStore } from '../../app/settingsStore';
+import { Constants } from '../../constants/constants';
+import { Dictionary } from '../../constants/dictionary';
 import { useAlert } from '../common/useAlert.hook';
 
 export const useWidgetButtonLogic = () => {
@@ -11,11 +13,12 @@ export const useWidgetButtonLogic = () => {
     const onSendToWidgetHandler = () => {
         if (activeMotivations.length === 0) {
             alertCaller(
-                'Ошибка',
-                'Вы пытаетесь сконфигурировать виджет данными, которых у вас нет. Добавьте фразы и попробуйте снова.',
+                Dictionary[Constants.language].strings.alerts.ERROR,
+                Dictionary[Constants.language].strings.alerts.ERROR_MESSAGE +
+                    '.',
                 [
                     {
-                        text: 'Ок',
+                        text: Dictionary[Constants.language].buttons.OK,
                         onPress: () => null,
                         style: 'cancel',
                     },
@@ -25,11 +28,12 @@ export const useWidgetButtonLogic = () => {
             sendToWidget();
 
             alertCaller(
-                'Отправлено',
-                'Новые данные сконфигурированы в виджете.',
+                Dictionary[Constants.language].strings.alerts.SENT,
+                Dictionary[Constants.language].strings.alerts
+                    .SUCCESS_WIDGET_CONFIG + '.',
                 [
                     {
-                        text: 'Ок',
+                        text: Dictionary[Constants.language].buttons.OK,
                         onPress: () => null,
                         style: 'cancel',
                     },

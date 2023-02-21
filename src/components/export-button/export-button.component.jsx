@@ -1,5 +1,6 @@
 import React from 'react';
 import { Constants } from '../../constants/constants';
+import { Dictionary } from '../../constants/dictionary';
 
 import { CustomButton } from '../custom-button/custom-button.component';
 import { CustomText } from '../custom-text/custom-text.component';
@@ -19,7 +20,10 @@ export const ExportButton = () => {
                 icon="database-export-outline"
                 size={Constants.MEDIUM_ICON_SIZE}
             />
-            <CustomText style={styles.buttonText} text="Экспорт" />
+            <CustomText
+                style={styles.buttonText}
+                text={Dictionary[Constants.language].buttons.EXPORT}
+            />
         </CustomButton>
     );
 };

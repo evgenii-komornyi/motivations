@@ -61,4 +61,9 @@ export const Constants = {
         image: { uri: 'asset:/backgrounds/0.jpg' },
         isVisible: true,
     },
+    values: {
+        TITLE_MAX_LENGTH: 200,
+        CATEGORY_MAX_LENGTH: 20,
+    },
+    language: 'en',
 };

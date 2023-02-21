@@ -1,4 +1,6 @@
 import React from 'react';
+import { Dictionary } from '../../constants/dictionary';
+import { Constants } from '../../constants/constants';
 
 import { FlatList, SafeAreaView, View } from 'react-native';
 import { CustomText } from '../../components/custom-text/custom-text.component';
@@ -25,7 +27,10 @@ export const WidgetSettings = () => {
             <View style={styles.wrapper}>
                 <CustomText
                     style={styles.countActiveMotivationsTitle}
-                    text="Количество активных фраз в каждой категории"
+                    text={
+                        Dictionary[Constants.language].strings.commons
+                            .COUNT_ACTIVE
+                    }
                 />
                 <FlatList
                     data={sortCategories(categories)}

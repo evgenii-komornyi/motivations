@@ -1,5 +1,6 @@
 import React from 'react';
 import { Constants } from '../../constants/constants';
+import { Dictionary } from '../../constants/dictionary';
 
 import { Pressable, TextInput, View } from 'react-native';
 import { CustomText } from '../custom-text/custom-text.component';
@@ -19,8 +20,11 @@ export const EditForm = ({ item, closeForm, category }) => {
                 value={title}
                 multiline
                 editable
-                maxLength={200}
-                placeholder="Фраза"
+                maxLength={Constants.values.TITLE_MAX_LENGTH}
+                placeholder={
+                    Dictionary[Constants.language].strings.commons
+                        .PLACEHOLDER_PHRASE
+                }
                 style={[
                     styles.textInput,
                     { borderColor: !isTooLong ? 'black' : 'red' },
@@ -53,7 +57,9 @@ export const EditForm = ({ item, closeForm, category }) => {
                     />
                 </View>
                 <View style={styles.saveTitleContainer}>
-                    <CustomText text="Сохранить" />
+                    <CustomText
+                        text={Dictionary[Constants.language].buttons.SAVE}
+                    />
                 </View>
             </Pressable>
         </View>

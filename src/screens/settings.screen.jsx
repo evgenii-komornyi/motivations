@@ -11,6 +11,7 @@ import { Settings } from '../components/settings/settings.component';
 import { useOnBackPress } from '../hooks/common/useOnBackPress.hook';
 
 import { styles } from '../styles/globalStyle';
+import { Dictionary } from '../constants/dictionary';
 
 export const SettingsScreen = () => {
     useOnBackPress();
@@ -44,7 +45,9 @@ export const SettingsScreen = () => {
                     </Pressable>
                 }
                 centerComponent={{
-                    text: 'Настройки',
+                    text: Dictionary[
+                        Constants.language
+                    ].strings.tabs.SETTINGS.toUpperCase(),
                     style: {
                         color: '#fff',
                         fontSize: 20,

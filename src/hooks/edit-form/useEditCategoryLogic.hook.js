@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Constants } from '../../constants/constants';
 import { useCategoriesStore } from '../../app/categoriesStore';
 
 export const useEditCategoryLogic = (item, closeForm) => {
@@ -17,7 +18,7 @@ export const useEditCategoryLogic = (item, closeForm) => {
     const [isTooLong, setIsTooLong] = useState(false);
 
     const checkValueLength = value => {
-        if (value.length >= 20) {
+        if (value.length >= Constants.values.CATEGORY_MAX_LENGTH) {
             setIsTooLong(true);
         } else {
             setIsTooLong(false);

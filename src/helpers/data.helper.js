@@ -21,24 +21,3 @@ export const routes = [
         screen: <CategoryScreen />,
     },
 ];
-
-export const menus = [
-    {
-        path: '/',
-        title: 'Каталог',
-        iconType: 'solid',
-        icon: 'sitemap',
-    },
-    {
-        path: '/backgrounds',
-        title: 'Фоны',
-        iconType: 'regular',
-        icon: 'images',
-    },
-    {
-        path: '/settings',
-        title: 'Настройки',
-        iconType: 'solid',
-        icon: 'sliders',
-    },
-];

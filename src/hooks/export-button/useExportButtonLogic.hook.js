@@ -5,6 +5,8 @@ import { useSettingsStore } from '../../app/settingsStore';
 import { useAlert } from '../common/useAlert.hook';
 
 import { generateFileName } from '../../helpers/generators.helper';
+import { Constants } from '../../constants/constants';
+import { Dictionary } from '../../constants/dictionary';
 
 export const useExportButtonLogic = () => {
     const { motivations, categories } = useSettingsStore();
@@ -44,7 +46,9 @@ export const useExportButtonLogic = () => {
             if (permissions.granted) {
                 let directoryUri = permissions.directoryUri;
 
-                const fileName = generateFileName('motivations');
+                const fileName = generateFileName(
+                    Constants.MOTIVATIONS_STORAGE_KEY
+                );
 
                 const fileUri =
                     await FileSystem.StorageAccessFramework.createFileAsync(
@@ -59,13 +63,20 @@ export const useExportButtonLogic = () => {
                     const directory = directoryUri.split('/');
 
                     alertCaller(
-                        'Сохранено!',
-                        `Бэкап ${fileName} сохранён в папку ${directory[
-                            directory.length - 1
-                        ].replace(/primary%3A|%2F/g, '/')}.`,
+                        Dictionary[Constants.language].strings.alerts.SAVED +
+                            '!',
+                        `${
+                            Dictionary[Constants.language].strings.alerts.BACKUP
+                        } ${fileName} ${
+                            Dictionary[Constants.language].strings.alerts
+                                .WAS_SAVED_INTO_FOLDER
+                        } ${directory[directory.length - 1].replace(
+                            /primary%3A|%2F/g,
+                            '/'
+                        )}.`,
                         [
                             {
-                                text: 'Ok',
+                                text: Dictionary[Constants.language].buttons.OK,
                                 onPress: () => null,
                                 style: 'cancel',
                             },
@@ -73,11 +84,16 @@ export const useExportButtonLogic = () => {
                     );
                 } else {
                     alertCaller(
-                        'Не сохранено!',
-                        'Данные, которые вы сохраняете сломаны!',
+                        `${Dictionary[Constants.language].strings.alerts.NOT} ${
+                            Dictionary[Constants.language].strings.alerts.SAVED
+                        }!`,
+                        `${
+                            Dictionary[Constants.language].strings.alerts
+                                .BROKEN_DATA
+                        }!`,
                         [
                             {
-                                text: 'Ok',
+                                text: Dictionary[Constants.language].buttons.OK,
                                 onPress: () => null,
                                 style: 'cancel',
                             },
@@ -86,11 +102,13 @@ export const useExportButtonLogic = () => {
                 }
             } else {
                 alertCaller(
-                    'Важно!',
-                    'Вы должны разрешить доступ к папке загрузки!',
+                    Dictionary[Constants.language].strings.alerts.IMPORTANT +
+                        '!',
+                    Dictionary[Constants.language].strings.alerts.ALLOW_ACCESS +
+                        '!',
                     [
                         {
-                            text: 'Ok',
+                            text: Dictionary[Constants.language].buttons.OK,
                             onPress: () => null,
                             style: 'cancel',
                         },

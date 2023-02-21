@@ -1,4 +1,7 @@
 import { useEffect } from 'react';
+import { Constants } from '../../constants/constants';
+import { Dictionary } from '../../constants/dictionary';
+
 import { Alert } from 'react-native';
 import { BackHandler } from 'react-native';
 import { useNavigate, useLocation } from 'react-router-native';
@@ -11,14 +14,22 @@ export const useOnBackPress = () => {
         if (location.key !== 'default') {
             navigate(-1);
         } else {
-            Alert.alert('Выход', 'Вы точно хотите выйти из приложения?', [
-                {
-                    text: 'Нет',
-                    onPress: () => null,
-                    style: 'cancel',
-                },
-                { text: 'Да', onPress: () => BackHandler.exitApp() },
-            ]);
+            Alert.alert(
+                Dictionary[Constants.language].strings.alerts.EXIT,
+                Dictionary[Constants.language].strings.alerts.EXIT_QUESTION +
+                    '?',
+                [
+                    {
+                        text: Dictionary[Constants.language].buttons.NO,
+                        onPress: () => null,
+                        style: 'cancel',
+                    },
+                    {
+                        text: Dictionary[Constants.language].buttons.YES,
+                        onPress: () => BackHandler.exitApp(),
+                    },
+                ]
+            );
         }
 
         return true;

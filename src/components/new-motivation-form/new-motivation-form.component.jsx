@@ -1,5 +1,6 @@
 import React from 'react';
 import { Constants } from '../../constants/constants';
+import { Dictionary } from '../../constants/dictionary';
 
 import { View, Switch, TextInput, Pressable } from 'react-native';
 import { Icon } from '../icon/icon.component';
@@ -34,7 +35,10 @@ export const NewMotivationForm = ({ category }) => {
                         editable
                         maxLength={200}
                         value={fields.title}
-                        placeholder="Фраза"
+                        placeholder={
+                            Dictionary[Constants.language].strings.commons
+                                .PLACEHOLDER_PHRASE
+                        }
                         style={[
                             styles.textInput,
                             { borderColor: !isTooLong ? 'black' : 'red' },
@@ -43,7 +47,12 @@ export const NewMotivationForm = ({ category }) => {
                     />
                     <View style={styles.visibilityContainer}>
                         <View style={styles.visibilityTitle}>
-                            <CustomText text="Видимость: " />
+                            <CustomText
+                                text={
+                                    Dictionary[Constants.language].strings
+                                        .commons.PLACEHOLDER_VISIBILITY + ': '
+                                }
+                            />
                         </View>
                         <View style={styles.visibilitySwitcherContainer}>
                             <Switch
@@ -85,7 +94,11 @@ export const NewMotivationForm = ({ category }) => {
                             />
                         </View>
                         <View style={styles.saveTitleContainer}>
-                            <CustomText text="Сохранить" />
+                            <CustomText
+                                text={
+                                    Dictionary[Constants.language].buttons.SAVE
+                                }
+                            />
                         </View>
                     </Pressable>
                 </>

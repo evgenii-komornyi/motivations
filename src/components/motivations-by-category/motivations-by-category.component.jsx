@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Constants } from '../../constants/constants';
+import { Dictionary } from '../../constants/dictionary';
 import { useNavigate, useParams } from 'react-router-native';
 
 import { View, SafeAreaView, FlatList, Pressable } from 'react-native';
@@ -79,7 +80,9 @@ export const MotivationsByCategory = () => {
                             </Pressable>
                         }
                         centerComponent={{
-                            text: getCategoryTitleById(params.category),
+                            text: getCategoryTitleById(
+                                params.category
+                            ).toUpperCase(),
                             style: {
                                 color: '#fff',
                                 fontSize: 20,
@@ -119,7 +122,13 @@ export const MotivationsByCategory = () => {
                         />
                     ) : (
                         <View>
-                            <CustomText style={styles.category} text="Пусто!" />
+                            <CustomText
+                                style={styles.category}
+                                text={
+                                    Dictionary[Constants.language].strings
+                                        .commons.EMPTY
+                                }
+                            />
                         </View>
                     )}
                     <ModalWindow

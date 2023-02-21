@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Constants } from '../../constants/constants';
 
 import { useMotivationsStore } from '../../app/motivationsStore';
 
@@ -18,7 +19,7 @@ export const useEditMotivationLogic = (item, closeForm, category) => {
     const [isTooLong, setIsTooLong] = useState(false);
 
     const checkValueLength = value => {
-        if (value.length >= 200) {
+        if (value.length >= Constants.values.TITLE_MAX_LENGTH) {
             setIsTooLong(true);
         } else {
             setIsTooLong(false);

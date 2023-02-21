@@ -1,5 +1,6 @@
 import React from 'react';
 import { Constants } from '../../constants/constants';
+import { Dictionary } from '../../constants/dictionary';
 
 import { Pressable, TextInput, View } from 'react-native';
 import { Icon } from '../icon/icon.component';
@@ -23,8 +24,11 @@ export const EditCategoryForm = ({ item, closeForm }) => {
                 value={categoryName}
                 multiline
                 editable
-                maxLength={20}
-                placeholder="Категория"
+                maxLength={Constants.values.CATEGORY_MAX_LENGTH}
+                placeholder={
+                    Dictionary[Constants.language].strings.commons
+                        .PLACEHOLDER_CATEGORY
+                }
                 style={[
                     styles.textInput,
                     { borderColor: !isTooLong ? 'black' : 'red' },

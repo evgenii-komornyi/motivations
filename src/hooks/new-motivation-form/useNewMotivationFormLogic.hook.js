@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { Constants } from '../../constants/constants';
 import { useNavigate } from 'react-router-native';
 import { useMotivationsStore } from '../../app/motivationsStore';
 import { generateID } from '../../helpers/generators.helper';
 import { useAlert } from '../common/useAlert.hook';
+import { Dictionary } from '../../constants/dictionary';
 
 export const useNewMotivationFormLogic = category => {
     const [fields, setFields] = useState({
@@ -15,7 +17,10 @@ export const useNewMotivationFormLogic = category => {
     const [isTooLong, setIsTooLong] = useState(false);
 
     const checkValueLength = (name, value) => {
-        if (name === 'title' && value.length >= 200) {
+        if (
+            name === 'title' &&
+            value.length >= Constants.values.TITLE_MAX_LENGTH
+        ) {
             setIsTooLong(true);
         } else {
             setIsTooLong(false);
@@ -44,11 +49,13 @@ export const useNewMotivationFormLogic = category => {
 
         !isSending &&
             alertCaller(
-                'Сохранено',
-                'Данные сохранены в базу.',
+                Dictionary[Constants.language].strings.alerts.SAVED + '!',
+                Dictionary[Constants.language].strings.alerts.DATA_WAS_SAVED +
+                    '.',
                 [
                     {
-                        text: 'Вернуться в каталог',
+                        text: Dictionary[Constants.language].buttons
+                            .BACK_TO_CATALOGUE,
                         onPress: () => {
                             navigate('/');
                             setIsModalVisible(false);
@@ -56,7 +63,7 @@ export const useNewMotivationFormLogic = category => {
                         style: 'cancel',
                     },
                     {
-                        text: 'Добавить ещё фразу',
+                        text: Dictionary[Constants.language].buttons.ADD_MORE,
                         onPress: () => null,
                         style: 'cancel',
                     },

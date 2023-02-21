@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { Constants } from '../../constants/constants';
+import { Dictionary } from '../../constants/dictionary';
 import { useMotivationsStore } from '../../app/motivationsStore';
 import { useAlert } from '../common/useAlert.hook';
 import { useCreateRef } from '../common/useCreateRef.hook';
@@ -27,17 +29,21 @@ export const useMotivationByCategoryItemLogic = (item, category) => {
     const alertCaller = useAlert();
 
     const removeItem = id => {
-        alertCaller('Удалить?', 'Вы точно хотите удалить эту фразу из базы?', [
-            {
-                text: 'Нет',
-                onPress: () => null,
-                style: 'cancel',
-            },
-            {
-                text: 'Да',
-                onPress: () => removeMotivation(id, category),
-            },
-        ]);
+        alertCaller(
+            Dictionary[Constants.language].strings.alerts.DELETE + '?',
+            Dictionary[Constants.language].strings.alerts.DELETE_QUESTION + '?',
+            [
+                {
+                    text: Dictionary[Constants.language].buttons.NO,
+                    onPress: () => null,
+                    style: 'cancel',
+                },
+                {
+                    text: Dictionary[Constants.language].buttons.YES,
+                    onPress: () => removeMotivation(id, category),
+                },
+            ]
+        );
     };
 
     const onLongPressHandler = () => {

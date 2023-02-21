@@ -4,12 +4,14 @@ import {
     AntDesign,
     FontAwesome5,
 } from '@expo/vector-icons';
+import { Constants } from '../../constants/constants';
+import { Dictionary } from '../../constants/dictionary';
 
 export const useTabs = () => {
     return [
         {
             path: '/',
-            name: 'Catalog',
+            name: Dictionary[Constants.language].strings.tabs.CATALOG,
             activeIcon: (
                 <MaterialCommunityIcons
                     name="book-open-page-variant-outline"
@@ -21,7 +23,7 @@ export const useTabs = () => {
         },
         // {
         //     path: '/backgrounds',
-        //     name: 'New item',
+        //     name: Dictionary[Constants.language].strings.tabs.BACKGROUNDS,
         //     activeIcon: (
         //         <MaterialCommunityIcons
         //             name="notebook-edit-outline"
@@ -39,7 +41,7 @@ export const useTabs = () => {
         // },
         {
             path: '/settings',
-            name: 'Settings',
+            name: Dictionary[Constants.language].strings.tabs.SETTINGS,
             activeIcon: <FontAwesome5 name="cogs" size={24} color="white" />,
             inactiveIcon: (
                 <Ionicons name="ios-settings-outline" size={24} color="white" />

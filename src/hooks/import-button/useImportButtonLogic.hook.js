@@ -1,5 +1,7 @@
 import * as FileSystem from 'expo-file-system';
 import * as DocumentPicker from 'expo-document-picker';
+import { Dictionary } from '../../constants/dictionary';
+import { Constants } from '../../constants/constants';
 import { ToastAndroid } from 'react-native';
 
 import { useSettingsStore } from '../../app/settingsStore';
@@ -20,7 +22,10 @@ export const useImport = () => {
                 await DocumentPicker.getDocumentAsync({});
 
             if (type === 'cancel') {
-                toastCaller('Для импорта нужно выбрать файл!');
+                toastCaller(
+                    Dictionary[Constants.language].strings.toasts
+                        .NO_FILE_SELECTED + '!'
+                );
 
                 return;
             }
@@ -29,7 +34,13 @@ export const useImport = () => {
 
             if (mimeType !== 'application/json') {
                 toastCaller(
-                    `Невозможно импортировать ${mimeType}! Только json файлы!!!`
+                    `${
+                        Dictionary[Constants.language].strings.toasts
+                            .IMPOSSIBLE_IMPORT
+                    } ${mimeType}! ${
+                        Dictionary[Constants.language].strings.toasts
+                            .ONLY_JSON_FILES
+                    }!`
                 );
 
                 return;
@@ -37,16 +48,24 @@ export const useImport = () => {
 
             if (motivations.length !== 0 && categories.length !== 0) {
                 alertCaller(
-                    'Важно!',
-                    'Ваша база не пуста! Если вы продолжите, то данные перепишутся.',
+                    Dictionary[Constants.language].strings.alerts.IMPORTANT +
+                        '!',
+                    `${
+                        Dictionary[Constants.language].strings.alerts
+                            .DATABASE_NOT_EMPTY
+                    }! $${
+                        Dictionary[Constants.language].strings.alerts
+                            .IF_CONTINUE_THEN_LOST
+                    }!`,
                     [
                         {
-                            text: 'Переписать',
+                            text: Dictionary[Constants.language].buttons
+                                .CONTINUE,
                             onPress: () => importToDB(content),
                             style: 'default',
                         },
                         {
-                            text: 'Отменить',
+                            text: Dictionary[Constants.language].buttons.CANCEL,
                             onPress: () => null,
                             style: 'cancel',
                         },
@@ -65,7 +84,8 @@ export const useImport = () => {
         if (isSaved) {
             setTimeout(() => {
                 ToastAndroid.showWithGravityAndOffset(
-                    'Данные успешно импортированы!',
+                    Dictionary[Constants.language].strings.toasts
+                        .SUCCESS_IMPORTED + '!',
                     ToastAndroid.LONG,
                     ToastAndroid.BOTTOM,
                     25,
@@ -75,7 +95,8 @@ export const useImport = () => {
             }, 4000);
         } else {
             ToastAndroid.showWithGravityAndOffset(
-                'Something went wrong!',
+                Dictionary[Constants.language].strings.toasts.FAILED_IMPORTED +
+                    '!',
                 ToastAndroid.LONG,
                 ToastAndroid.BOTTOM,
                 25,

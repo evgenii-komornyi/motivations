@@ -8,6 +8,8 @@ import { useMotivationsStore } from '../../app/motivationsStore';
 
 import { useToast } from '../common/useToast.hook';
 import { useCreateRef } from '../common/useCreateRef.hook';
+import { Dictionary } from '../../constants/dictionary';
+import { Constants } from '../../constants/constants';
 
 export const useCategoryLogic = data => {
     const [image, setImage] = useState(data.image);
@@ -23,13 +25,23 @@ export const useCategoryLogic = data => {
                 await DocumentPicker.getDocumentAsync({});
 
             if (type === 'cancel') {
-                toastCaller('Файл не выбран!');
+                toastCaller(
+                    Dictionary[Constants.language].strings.toasts
+                        .NO_FILE_SELECTED
+                );
 
                 return;
             }
 
-            if (mimeType !== 'image/jpeg') {
-                toastCaller('Только jpg/jpeg формат файлов!');
+            if (
+                mimeType !== 'image/jpeg' &&
+                mimeType !== 'image/png' &&
+                mimeType !== 'image/x-png' &&
+                mimeType !== 'image/gif'
+            ) {
+                toastCaller(
+                    Dictionary[Constants.language].strings.toasts.INVALID_FORMAT
+                );
 
                 return;
             }
