@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import * as FileSystem from 'expo-file-system';
 import * as DocumentPicker from 'expo-document-picker';
@@ -19,7 +19,20 @@ export const useCategoryLogic = data => {
 
     const choosePicture = async () => {
         try {
-            const { name, uri } = await pickDocument();
+            const { name, mimeType, type, uri } =
+                await DocumentPicker.getDocumentAsync({});
+
+            if (type === 'cancel') {
+                toastCaller('Файл не выбран!');
+
+                return;
+            }
+
+            if (mimeType !== 'image/jpeg') {
+                toastCaller('Только jpg/jpeg формат файлов!');
+
+                return;
+            }
 
             const splitted = name.split('.');
 
@@ -37,10 +50,7 @@ export const useCategoryLogic = data => {
                 });
             }
 
-            await copyFile(
-                uri,
-                `${categoriesDirectory}${data.id}.${extension}`
-            );
+            copyFile(uri, `${categoriesDirectory}${data.id}.${extension}`);
 
             const dir = await FileSystem.readDirectoryAsync(
                 FileSystem.documentDirectory + 'categories/'
@@ -54,37 +64,9 @@ export const useCategoryLogic = data => {
 
             setImage(imageUri);
             updateImage(data.id, imageUri);
-
-            await FileSystem.deleteAsync(
-                FileSystem.cacheDirectory + 'DocumentPicker/'
-            );
         } catch (error) {
             console.warn(error);
         }
-    };
-
-    const pickDocument = async () => {
-        const { name, mimeType, type, uri } =
-            await DocumentPicker.getDocumentAsync({});
-
-        if (type === 'cancel') {
-            toastCaller('Файл не выбран!');
-
-            return;
-        }
-
-        if (
-            mimeType !== 'image/jpeg' &&
-            mimeType !== 'image/png' &&
-            mimeType !== 'image/x-png' &&
-            mimeType !== 'image/gif'
-        ) {
-            toastCaller('Файл не является картинкой! Выберите картинку!');
-
-            return;
-        }
-
-        return { name, uri };
     };
 
     const copyFile = async (from, to) => {

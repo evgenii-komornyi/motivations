@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Constants } from '../../constants/constants';
 
-import { ImageBackground, Pressable, View } from 'react-native';
+import { ImageBackground, Pressable, View, NativeModules } from 'react-native';
 import { CustomText } from '../../components/custom-text/custom-text.component';
 import { Icon } from '../../components/icon/icon.component';
 
@@ -10,6 +10,9 @@ import { EditCategoryForm } from '../../components/edit-form/edit-category-form.
 import { useCategoryLogic } from '../../hooks/categories-tab/useCategoryLogic.hook';
 
 import { styles } from './common-settings.styles';
+import { useCategoriesStore } from '../../app/categoriesStore';
+
+const { CacheCleaner } = NativeModules;
 
 export const CategoryItem = ({ data }) => {
     const [
@@ -21,6 +24,12 @@ export const CategoryItem = ({ data }) => {
         onLongPressHandler,
         setIsEdit,
     ] = useCategoryLogic(data);
+
+    const { isImageUpdated } = useCategoriesStore();
+
+    useEffect(() => {
+        CacheCleaner.deleteCache();
+    }, [isImageUpdated]);
 
     return (
         <View

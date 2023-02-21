@@ -12,6 +12,7 @@ import {
 const categoriesStore = set => ({
     categories: [],
     isLoaded: false,
+    isImageUpdated: false,
 
     fetchCategories: async () => {
         try {
@@ -23,6 +24,7 @@ const categoriesStore = set => ({
         }
     },
     updateImage: async (id, imageUri) => {
+        set({ isImageUpdated: false });
         try {
             const modifiedCategories = await modifyCategories(id, {
                 image: imageUri,
@@ -31,7 +33,7 @@ const categoriesStore = set => ({
             const isSaved = await updateCategoryImage(modifiedCategories);
 
             if (isSaved) {
-                set({ categories: modifiedCategories });
+                set({ categories: modifiedCategories, isImageUpdated: true });
             }
         } catch (error) {
             console.warn(error);

@@ -39,7 +39,7 @@ public class WidgetService {
     }
 
     public static Bitmap getImageByCategory(String motivationCategory, Context context) {
-        File dir = context.getCacheDir();
+        File dir = context.getFilesDir();
         File categoriesDir = new File(dir + "/categories");
 
         File[] list = null;
@@ -64,7 +64,7 @@ public class WidgetService {
 
             for (File file : list) {
                 String[] splitted = file.getName().split("[.]", 0);
-                if (splitted[0].equals(motivationCategory)) {
+                if (file.getName().equals(motivationCategory + "." + splitted[1])) {
                     fileName = file.getName();
 
                     break;
