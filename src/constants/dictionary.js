@@ -51,6 +51,8 @@ export const Dictionary = {
                     'Вы пытаетесь сконфигурировать виджет данными, которых у вас нет. Добавьте фразы и попробуйте снова',
                 SENT: 'Отправлено',
                 SUCCESS_WIDGET_CONFIG: 'Новые данные отправлены виджету',
+                RESTART_APP:
+                    'Если установленная картинка не будет отображаться сразу, то перезапустите приложения. В виджете нужно дождаться смены фразы или сменить её вручную',
             },
             toasts: {
                 NO_FILE_SELECTED: 'Файл не выбран',
@@ -114,6 +116,8 @@ export const Dictionary = {
                     'You are trying to set widget with data that you do not have. Add the phrases and try again ',
                 SENT: 'Data was sent',
                 SUCCESS_WIDGET_CONFIG: 'New data was sent to widget',
+                RESTART_APP:
+                    'If selected image will not be shown at this moment, then you need to restart application. You need to wait changing phrase in the widget, or change it manualy',
             },
             toasts: {
                 NO_FILE_SELECTED: 'File was not selected',

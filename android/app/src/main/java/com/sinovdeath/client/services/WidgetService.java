@@ -2,10 +2,8 @@ package com.sinovdeath.client.services;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,39 +40,70 @@ public class WidgetService {
         File dir = context.getFilesDir();
         File categoriesDir = new File(dir + "/categories");
 
+        File[] list = getFilesCategoryFolder(categoriesDir);
+
+        InputStream inputStream = getFileByCategoryAssetsFolder(motivationCategory, context);
+
+        Bitmap bmp = null;
+
+        if (list == null) {
+            bmp = BitmapFactory.decodeStream(inputStream);
+        } else {
+            String fileName = getFileNameForBitmap(list, motivationCategory);
+
+            Bitmap immutableBmp = BitmapFactory.decodeFile(categoriesDir + "/" + fileName);
+            if (immutableBmp.getWidth() > 1920 && immutableBmp.getHeight() > 1080) {
+                bmp = convertBitmap(immutableBmp);
+            } else {
+                bmp = Bitmap.createScaledBitmap(immutableBmp, immutableBmp.getWidth(), immutableBmp.getHeight(), false);
+            }
+        }
+
+        return bmp;
+    }
+
+    private static String getFileNameForBitmap(File[] list, String motivationCategory) {
+        String fileName = "";
+
+        for (File file : list) {
+            String[] fileAndExtension = file.getName().split("[.]", 0);
+
+            if (file.getName().equals(motivationCategory + "." + fileAndExtension[1])) {
+                fileName = file.getName();
+
+                break;
+            }
+        }
+
+        return fileName;
+    }
+
+    private static Bitmap convertBitmap(Bitmap immutableBmp) {
+        Bitmap mutableBitmap = immutableBmp.copy(Bitmap.Config.ARGB_8888, true);
+
+        return Bitmap.createScaledBitmap(mutableBitmap, 1920, 1080, false);
+    }
+
+    private static InputStream getFileByCategoryAssetsFolder(String motivationCategory, Context context) {
+        InputStream inputStream = null;
+
+        try {
+            inputStream = context.getAssets().open("backgrounds/" + motivationCategory + ".jpg");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return inputStream;
+    }
+
+    private static File[] getFilesCategoryFolder(File categoriesDir) {
         File[] list = null;
 
         if (categoriesDir.exists()) {
             list = categoriesDir.listFiles();
         }
 
-        InputStream is = null;
-        try {
-            is = context.getAssets().open("backgrounds/" + motivationCategory + ".jpg");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        Bitmap bmp = null;
-
-        if (list == null) {
-            bmp = BitmapFactory.decodeStream(is);
-        } else {
-            String fileName = "";
-
-            for (File file : list) {
-                String[] splitted = file.getName().split("[.]", 0);
-                if (file.getName().equals(motivationCategory + "." + splitted[1])) {
-                    fileName = file.getName();
-
-                    break;
-                }
-            }
-
-            bmp = BitmapFactory.decodeFile(categoriesDir + "/" + fileName);
-        }
-
-        return bmp;
+        return list;
     }
 
     private static int getRandomNumberFromArray(JSONArray array) {

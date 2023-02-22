@@ -1,9 +1,4 @@
-import {
-    Ionicons,
-    MaterialCommunityIcons,
-    AntDesign,
-    FontAwesome5,
-} from '@expo/vector-icons';
+import { Icon } from '../../components/icon/icon.component';
 import { Constants } from '../../constants/constants';
 import { Dictionary } from '../../constants/dictionary';
 
@@ -13,13 +8,21 @@ export const useTabs = () => {
             path: '/',
             name: Dictionary[Constants.language].strings.tabs.CATALOG,
             activeIcon: (
-                <MaterialCommunityIcons
-                    name="book-open-page-variant-outline"
+                <Icon
+                    type={Constants.MATERIALCOMMUNITYICONS_ICON}
+                    icon="book-open-page-variant-outline"
                     size={24}
                     color="white"
                 />
             ),
-            inactiveIcon: <AntDesign name="book" size={24} color="white" />,
+            inactiveIcon: (
+                <Icon
+                    type={Constants.ANTDESIGN_ICON}
+                    icon="book"
+                    size={24}
+                    color="white"
+                />
+            ),
         },
         // {
         //     path: '/backgrounds',
@@ -42,9 +45,21 @@ export const useTabs = () => {
         {
             path: '/settings',
             name: Dictionary[Constants.language].strings.tabs.SETTINGS,
-            activeIcon: <FontAwesome5 name="cogs" size={24} color="white" />,
+            activeIcon: (
+                <Icon
+                    type={Constants.FONTAWESOME5_ICON}
+                    icon="cogs"
+                    size={24}
+                    color="white"
+                />
+            ),
             inactiveIcon: (
-                <Ionicons name="ios-settings-outline" size={24} color="white" />
+                <Icon
+                    type={Constants.IONICONS_ICON}
+                    icon="ios-settings-outline"
+                    size={24}
+                    color="white"
+                />
             ),
         },
     ];

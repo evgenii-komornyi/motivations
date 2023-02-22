@@ -65,5 +65,5 @@ export const Constants = {
         TITLE_MAX_LENGTH: 200,
         CATEGORY_MAX_LENGTH: 20,
     },
-    language: 'en',
+    language: 'ru',
 };
