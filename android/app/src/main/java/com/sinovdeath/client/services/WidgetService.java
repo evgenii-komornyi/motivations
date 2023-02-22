@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,12 +55,15 @@ public class WidgetService {
 
             Bitmap immutableBmp = BitmapFactory.decodeFile(categoriesDir + "/" + fileName);
             if (immutableBmp.getWidth() > 1920 && immutableBmp.getHeight() > 1080) {
-                bmp = convertBitmap(immutableBmp);
+                bmp = convertBitmap(immutableBmp, 1920, 1080);
+            } else if(immutableBmp.getWidth() > 700 && immutableBmp.getHeight() > 1500) {
+                bmp = convertBitmap(immutableBmp, 700, 1500);
             } else {
                 bmp = Bitmap.createScaledBitmap(immutableBmp, immutableBmp.getWidth(), immutableBmp.getHeight(), false);
             }
         }
 
+        Log.d("size", String.valueOf(bmp.getWidth()));
         return bmp;
     }
 
@@ -78,10 +83,10 @@ public class WidgetService {
         return fileName;
     }
 
-    private static Bitmap convertBitmap(Bitmap immutableBmp) {
+    private static Bitmap convertBitmap(Bitmap immutableBmp, int width, int height) {
         Bitmap mutableBitmap = immutableBmp.copy(Bitmap.Config.ARGB_8888, true);
 
-        return Bitmap.createScaledBitmap(mutableBitmap, 1920, 1080, false);
+        return Bitmap.createScaledBitmap(mutableBitmap, width, height, false);
     }
 
     private static InputStream getFileByCategoryAssetsFolder(String motivationCategory, Context context) {
