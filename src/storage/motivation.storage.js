@@ -44,60 +44,12 @@ export const getCategories = async () => {
             const newCategories = await read(Constants.CATEGORIES_STORAGE_KEY);
 
             return newCategories;
-        } else if (
-            categoriesInStorage[0].id &&
-            categoriesInStorage[0].id.includes('category-')
-        ) {
+        } else {
             return categoriesInStorage;
-        } else if (categoriesInStorage[0].text) {
-            const allMotivations = await getAllMotivations();
-
-            const convertedMotivations = convert(allMotivations);
-
-            await save(Constants.MOTIVATIONS_STORAGE_KEY, convertedMotivations);
-
-            await save(Constants.CATEGORIES_STORAGE_KEY, [
-                Constants.CATEGORY_1,
-                Constants.CATEGORY_2,
-                Constants.CATEGORY_3,
-                Constants.CATEGORY_4,
-                Constants.CATEGORY_5,
-                Constants.CATEGORY_6,
-            ]);
-
-            const newCategories = await read(Constants.CATEGORIES_STORAGE_KEY);
-
-            return newCategories;
         }
     } catch (error) {
         console.warn(error);
     }
-};
-
-const convert = array => {
-    const affirmationCategory = array
-        .filter(item => item.category === 'affirmation')
-        .map(item => ({ ...item, category: 'category-1' }));
-    const lonelinessCategory = array
-        .filter(item => item.category === 'loneliness')
-        .map(item => ({ ...item, category: 'category-2' }));
-    const loveCategory = array
-        .filter(item => item.category === 'love')
-        .map(item => ({ ...item, category: 'category-3' }));
-    const motivationCategory = array
-        .filter(item => item.category === 'motivation')
-        .map(item => ({ ...item, category: 'category-4' }));
-    const quotesCategory = array
-        .filter(item => item.category === 'quotes')
-        .map(item => ({ ...item, category: 'category-5' }));
-
-    return [
-        ...affirmationCategory,
-        ...lonelinessCategory,
-        ...loveCategory,
-        ...motivationCategory,
-        ...quotesCategory,
-    ];
 };
 
 export const updateCategory = async modifiedCategories => {

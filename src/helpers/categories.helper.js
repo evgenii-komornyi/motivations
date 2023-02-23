@@ -1,13 +1,5 @@
 import { getCategories } from '../storage/motivation.storage';
 
-export const getUniqueCategories = motivations => {
-    const uniqueCategories = new Set();
-
-    motivations.map(motivation => uniqueCategories.add(motivation.category));
-
-    return [...uniqueCategories];
-};
-
 export const sortCategories = array =>
     array.sort((a, b) => {
         const catA = a.id.toUpperCase();

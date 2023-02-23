@@ -49,22 +49,30 @@ public class WidgetService {
         Bitmap bmp = null;
 
         if (list == null) {
-            bmp = BitmapFactory.decodeStream(inputStream);
+            bmp = decodeStreamToBitmap(inputStream);
         } else {
             String fileName = getFileNameForBitmap(list, motivationCategory);
 
             Bitmap immutableBmp = BitmapFactory.decodeFile(categoriesDir + "/" + fileName);
-            if (immutableBmp.getWidth() > 1920 && immutableBmp.getHeight() > 1080) {
-                bmp = convertBitmap(immutableBmp, 1920, 1080);
-            } else if(immutableBmp.getWidth() > 700 && immutableBmp.getHeight() > 1500) {
-                bmp = convertBitmap(immutableBmp, 700, 1500);
+
+            if (immutableBmp != null) {
+                if (immutableBmp.getWidth() > 1920 && immutableBmp.getHeight() > 1080) {
+                    bmp = convertBitmap(immutableBmp, 1920, 1080);
+                } else if(immutableBmp.getWidth() > 700 && immutableBmp.getHeight() > 1500) {
+                    bmp = convertBitmap(immutableBmp, 700, 1500);
+                } else {
+                    bmp = Bitmap.createScaledBitmap(immutableBmp, immutableBmp.getWidth(), immutableBmp.getHeight(), false);
+                }
             } else {
-                bmp = Bitmap.createScaledBitmap(immutableBmp, immutableBmp.getWidth(), immutableBmp.getHeight(), false);
+                bmp = decodeStreamToBitmap(inputStream);
             }
         }
 
-        Log.d("size", String.valueOf(bmp.getWidth()));
         return bmp;
+    }
+
+    private static Bitmap decodeStreamToBitmap(InputStream stream) {
+        return BitmapFactory.decodeStream(stream);
     }
 
     private static String getFileNameForBitmap(File[] list, String motivationCategory) {

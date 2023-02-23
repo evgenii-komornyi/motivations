@@ -18,7 +18,7 @@ const categoriesStore = set => ({
         try {
             const categories = await getCategories();
 
-            set({ categories: categories ? categories : [], isLoaded: true });
+            set({ categories: categories, isLoaded: true });
         } catch (error) {
             set({ isLoaded: false });
         }
