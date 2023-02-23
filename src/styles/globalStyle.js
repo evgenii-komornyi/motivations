@@ -15,4 +15,7 @@ export const styles = StyleSheet.create({
         borderColor: 'white',
         borderRadius: 35,
     },
+    buttonText: {
+        paddingLeft: 10,
+    },
 });

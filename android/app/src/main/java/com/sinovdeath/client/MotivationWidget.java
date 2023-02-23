@@ -5,21 +5,11 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetManager;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.util.Log;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
 
 import com.sinovdeath.client.services.Motivation;
 import com.sinovdeath.client.services.WidgetService;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 public class MotivationWidget extends AppWidgetProvider {
 
@@ -30,24 +20,6 @@ public class MotivationWidget extends AppWidgetProvider {
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(),
                 R.layout.motivation_widget);
 
-        AssetManager am = context.getAssets();
-        String[] fileList = null;
-        String file = null;
-
-        try {
-            fileList = am.list("backgrounds");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        if (fileList != null)
-        {
-            for ( int i = 0;i<fileList.length;i++)
-            {
-                Log.d("backgrounds", fileList[i].split("\\.")[0]);
-            }
-        }
-
         Motivation motivation = WidgetService.getItemFromStorage(context);
         String motivationText = motivation.title;
         String motivationCategory = motivation.category;
@@ -56,13 +28,8 @@ public class MotivationWidget extends AppWidgetProvider {
             remoteViews.setTextViewText(R.id.update, context.getString(R.string.appwidget_text));
         } else {
             remoteViews.setTextViewText(R.id.update, motivationText);
-            InputStream is = null;
-            try {
-                is = context.getAssets().open("backgrounds/" + motivationCategory + ".jpg");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            Bitmap bmp = BitmapFactory.decodeStream(is);
+
+            Bitmap bmp = WidgetService.getImageByCategory(motivationCategory, context);
 
             remoteViews.setImageViewBitmap(R.id.imageView, bmp);
         }

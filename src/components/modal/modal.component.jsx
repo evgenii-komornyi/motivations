@@ -1,10 +1,11 @@
 import React from 'react';
 import { Constants } from '../../constants/constants';
+import { Dictionary } from '../../constants/dictionary';
 
 import { Modal, Pressable, View } from 'react-native';
 import { Icon } from '../icon/icon.component';
 
-import { useAlert } from '../../hooks/useAlert';
+import { useAlert } from '../../hooks/common/useAlert.hook';
 
 import { styles } from './modal.styles';
 
@@ -18,9 +19,17 @@ export const ModalWindow = ({ children, modalVisible, setModalVisible }) => {
                 transparent={true}
                 visible={modalVisible}
                 onRequestClose={() => {
-                    alertCaller(null, 'Modal has been closed.', [
-                        { text: 'Ok', onPress: () => null },
-                    ]);
+                    alertCaller(
+                        null,
+                        Dictionary[Constants.language].strings.alerts
+                            .CLOSE_MODAL,
+                        [
+                            {
+                                text: Dictionary[Constants.language].buttons.OK,
+                                onPress: () => null,
+                            },
+                        ]
+                    );
                     setModalVisible(!modalVisible);
                 }}
             >

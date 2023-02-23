@@ -1,25 +1,30 @@
-export const getCategoryTitleByName = category => {
-    const categories = new Map();
-    categories.set('loneliness', {
-        text: 'Одиночество',
-        image: require('../../assets/backgrounds/loneliness.jpg'),
-    });
-    categories.set('love', {
-        text: 'Любовь',
-        image: require('../../assets/backgrounds/love.jpg'),
-    });
-    categories.set('quotes', {
-        text: 'Цитаты',
-        image: require('../../assets/backgrounds/quotes.jpg'),
-    });
-    categories.set('affirmation', {
-        text: 'Аффирмация',
-        image: require('../../assets/backgrounds/affirmation.jpg'),
-    });
-    categories.set('motivation', {
-        text: 'Мотивация',
-        image: require('../../assets/backgrounds/motivation.jpg'),
+import { getCategories } from '../storage/motivation.storage';
+
+export const sortCategories = array =>
+    array.sort((a, b) => {
+        const catA = a.id.toUpperCase();
+        const catB = b.id.toUpperCase();
+
+        if (catA < catB) {
+            return -1;
+        }
+        if (catA > catB) {
+            return 1;
+        }
+
+        return 0;
     });
 
-    return categories.get(category);
+export const modifyCategories = async (id, modifiedField) => {
+    const allCategories = await getCategories();
+
+    const categoryById = allCategories.find(category => category.id === id);
+
+    const modifiedObject = { ...categoryById, ...modifiedField };
+
+    const removedExistsCategory = allCategories.filter(
+        category => category.id !== id
+    );
+
+    return [...removedExistsCategory, modifiedObject];
 };

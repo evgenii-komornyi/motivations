@@ -1,87 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Constants } from '../../constants/constants';
-import { useNavigate } from 'react-router-native';
+import { Dictionary } from '../../constants/dictionary';
 
 import { View, Switch, TextInput, Pressable } from 'react-native';
 import { Icon } from '../icon/icon.component';
 import { CustomText } from '../custom-text/custom-text.component';
-
 import { Loader } from '../loader/loader.component';
 
-import { useMotivationsStore } from '../../app/motivationsStore';
-import { useAlert } from '../../hooks/useAlert';
+import { useNewMotivationFormLogic } from '../../hooks/new-motivation-form/useNewMotivationFormLogic.hook';
 
-import { generateID } from '../../helpers/generators.helper';
 import { loaders } from '../../helpers/loader.helper';
 
 import { styles } from './new-motivation-form.styles';
 
 export const NewMotivationForm = ({ category }) => {
-    const [fields, setFields] = useState({
-        _id: generateID(),
-        title: '',
-        category: category,
-        isActive: true,
-    });
-    const [isTooLong, setIsTooLong] = useState(false);
-
-    const checkValueLength = (name, value) => {
-        if (name === 'title' && value.length === 200) {
-            setIsTooLong(true);
-        } else {
-            setIsTooLong(false);
-        }
-    };
-
-    const toggleSwitch = () =>
-        setFields({ ...fields, isActive: !fields.isActive });
-
-    const handleChange = (value, name) => {
-        setFields({ ...fields, [name]: value });
-        checkValueLength(name, value);
-    };
-
-    const isButtonDisabled = fields.title === '';
-
-    const { isSending, setIsModalVisible, saveMotivation } =
-        useMotivationsStore();
-
-    const navigate = useNavigate();
-
-    const alertCaller = useAlert();
-
-    const handleSavePress = () => {
-        saveMotivation(fields);
-
-        !isSending &&
-            alertCaller(
-                'Сохранено',
-                'Данные сохранены в базу.',
-                [
-                    {
-                        text: 'Вернуться в каталог',
-                        onPress: () => {
-                            navigate('/');
-                            setIsModalVisible(false);
-                        },
-                        style: 'cancel',
-                    },
-                    {
-                        text: 'Добавить ещё фразу',
-                        onPress: () => null,
-                        style: 'cancel',
-                    },
-                ],
-                1
-            );
-
-        setFields({
-            _id: generateID(),
-            title: '',
-            category: category,
-            isActive: true,
-        });
-    };
+    const [
+        fields,
+        isTooLong,
+        isSending,
+        toggleSwitch,
+        handleChange,
+        isButtonDisabled,
+        handleSavePress,
+    ] = useNewMotivationFormLogic(category);
 
     return (
         <View style={styles.mainContainer}>
@@ -94,7 +35,10 @@ export const NewMotivationForm = ({ category }) => {
                         editable
                         maxLength={200}
                         value={fields.title}
-                        placeholder="Фраза"
+                        placeholder={
+                            Dictionary[Constants.language].strings.commons
+                                .PLACEHOLDER_PHRASE
+                        }
                         style={[
                             styles.textInput,
                             { borderColor: !isTooLong ? 'black' : 'red' },
@@ -103,7 +47,12 @@ export const NewMotivationForm = ({ category }) => {
                     />
                     <View style={styles.visibilityContainer}>
                         <View style={styles.visibilityTitle}>
-                            <CustomText text="Видимость: " />
+                            <CustomText
+                                text={
+                                    Dictionary[Constants.language].strings
+                                        .commons.PLACEHOLDER_VISIBILITY + ': '
+                                }
+                            />
                         </View>
                         <View style={styles.visibilitySwitcherContainer}>
                             <Switch
@@ -145,7 +94,11 @@ export const NewMotivationForm = ({ category }) => {
                             />
                         </View>
                         <View style={styles.saveTitleContainer}>
-                            <CustomText text="Сохранить" />
+                            <CustomText
+                                text={
+                                    Dictionary[Constants.language].buttons.SAVE
+                                }
+                            />
                         </View>
                     </Pressable>
                 </>

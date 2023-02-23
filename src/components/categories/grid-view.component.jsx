@@ -4,8 +4,6 @@ import { useNavigate } from 'react-router-native';
 import { Dimensions, TouchableOpacity, ImageBackground } from 'react-native';
 import { CustomText } from '../custom-text/custom-text.component';
 
-import { getCategoryTitleByName } from '../../helpers/categories.helper';
-
 import { styles } from './categories.styles';
 
 const screenHeight = Dimensions.get('window').height;
@@ -16,15 +14,13 @@ const math = {
     },
 };
 
-export const GridView = ({ data: { category } }) => {
+export const GridView = ({ data: { id, category, image } }) => {
     const navigate = useNavigate();
-
-    const { text, image } = getCategoryTitleByName(category);
 
     return (
         <TouchableOpacity
             style={[styles.gridbox, math.margin]}
-            onPress={() => navigate(`categories/${category}`)}
+            onPress={() => navigate(`categories/${id}`)}
         >
             <ImageBackground
                 source={image}
@@ -32,7 +28,7 @@ export const GridView = ({ data: { category } }) => {
                 style={styles.image}
                 resizeMode="cover"
             >
-                <CustomText style={styles.text} text={text} />
+                <CustomText style={styles.text} text={category} />
             </ImageBackground>
         </TouchableOpacity>
     );

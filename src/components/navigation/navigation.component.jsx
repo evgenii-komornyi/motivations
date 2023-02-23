@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-native';
 import Tabbar from '@mindinventory/react-native-tab-bar-interaction';
 
-import { useTabs } from '../../hooks/useTabs';
+import { useTabs } from '../../hooks/navigation/useTabs.hook';
 
 import { styles } from './navigation.styles';
 

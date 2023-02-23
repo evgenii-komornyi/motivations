@@ -1,29 +1,28 @@
-import React from 'react';
-import { Constants } from '../../constants/constants';
-
 import * as FileSystem from 'expo-file-system';
-import { Pressable } from 'react-native';
-
-import { CustomText } from '../custom-text/custom-text.component';
-import { Icon } from '../icon/icon.component';
 
 import { useSettingsStore } from '../../app/settingsStore';
-import { useAlert } from '../../hooks/useAlert';
+
+import { useAlert } from '../common/useAlert.hook';
 
 import { generateFileName } from '../../helpers/generators.helper';
+import { Constants } from '../../constants/constants';
+import { Dictionary } from '../../constants/dictionary';
 
-import { styles } from './settings.styles';
-
-export const ExportButton = () => {
-    const { motivations } = useSettingsStore();
+export const useExportButtonLogic = () => {
+    const { motivations, categories } = useSettingsStore();
 
     const isDisabled = motivations.length === 0;
 
     const saveFile = async fileUri => {
         try {
+            const objectToExport = {
+                categories: [...categories],
+                motivations: [...motivations],
+            };
+
             await FileSystem.writeAsStringAsync(
                 fileUri,
-                JSON.stringify(motivations),
+                JSON.stringify(objectToExport),
                 {
                     encoding: FileSystem.EncodingType.UTF8,
                 }
@@ -47,7 +46,9 @@ export const ExportButton = () => {
             if (permissions.granted) {
                 let directoryUri = permissions.directoryUri;
 
-                const fileName = generateFileName('motivations');
+                const fileName = generateFileName(
+                    Constants.MOTIVATIONS_STORAGE_KEY
+                );
 
                 const fileUri =
                     await FileSystem.StorageAccessFramework.createFileAsync(
@@ -62,13 +63,20 @@ export const ExportButton = () => {
                     const directory = directoryUri.split('/');
 
                     alertCaller(
-                        'Сохранено!',
-                        `Бэкап ${fileName} сохранён в папку ${directory[
-                            directory.length - 1
-                        ].replace('primary%3A', '/')}.`,
+                        Dictionary[Constants.language].strings.alerts.SAVED +
+                            '!',
+                        `${
+                            Dictionary[Constants.language].strings.alerts.BACKUP
+                        } ${fileName} ${
+                            Dictionary[Constants.language].strings.alerts
+                                .WAS_SAVED_INTO_FOLDER
+                        } ${directory[directory.length - 1].replace(
+                            /primary%3A|%2F/g,
+                            '/'
+                        )}.`,
                         [
                             {
-                                text: 'Ok',
+                                text: Dictionary[Constants.language].buttons.OK,
                                 onPress: () => null,
                                 style: 'cancel',
                             },
@@ -76,11 +84,16 @@ export const ExportButton = () => {
                     );
                 } else {
                     alertCaller(
-                        'Не сохранено!',
-                        'Данные, которые вы сохраняете сломаны!',
+                        `${Dictionary[Constants.language].strings.alerts.NOT} ${
+                            Dictionary[Constants.language].strings.alerts.SAVED
+                        }!`,
+                        `${
+                            Dictionary[Constants.language].strings.alerts
+                                .BROKEN_DATA
+                        }!`,
                         [
                             {
-                                text: 'Ok',
+                                text: Dictionary[Constants.language].buttons.OK,
                                 onPress: () => null,
                                 style: 'cancel',
                             },
@@ -89,11 +102,13 @@ export const ExportButton = () => {
                 }
             } else {
                 alertCaller(
-                    'Важно!',
-                    'Вы должны разрешить доступ к папке загрузки!',
+                    Dictionary[Constants.language].strings.alerts.IMPORTANT +
+                        '!',
+                    Dictionary[Constants.language].strings.alerts.ALLOW_ACCESS +
+                        '!',
                     [
                         {
-                            text: 'Ok',
+                            text: Dictionary[Constants.language].buttons.OK,
                             onPress: () => null,
                             style: 'cancel',
                         },
@@ -105,29 +120,5 @@ export const ExportButton = () => {
         }
     };
 
-    return (
-        <Pressable
-            style={({ pressed }) => [
-                {
-                    backgroundColor: pressed
-                        ? 'rgba(0, 255, 255, 0.4)'
-                        : 'transparent',
-                },
-                styles.buttonContainer,
-                {
-                    backgroundColor: `${isDisabled ? '#bbb' : 'transparent'}`,
-                    borderColor: `${isDisabled ? 'red' : 'black'}`,
-                },
-            ]}
-            disabled={isDisabled}
-            onPress={exportDBToFile}
-        >
-            <Icon
-                type={Constants.MATERIALCOMMUNITYICONS_ICON}
-                icon="database-export-outline"
-                size={Constants.MEDIUM_ICON_SIZE}
-            />
-            <CustomText style={styles.buttonText} text="Экспорт" />
-        </Pressable>
-    );
+    return [isDisabled, exportDBToFile];
 };

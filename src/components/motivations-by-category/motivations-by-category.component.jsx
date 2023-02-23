@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Constants } from '../../constants/constants';
+import { Dictionary } from '../../constants/dictionary';
 import { useNavigate, useParams } from 'react-router-native';
 
 import { View, SafeAreaView, FlatList, Pressable } from 'react-native';
@@ -11,8 +12,8 @@ import { Item } from './item.component';
 import { Icon } from '../icon/icon.component';
 import { CustomText } from '../custom-text/custom-text.component';
 
+import { useCategoriesStore } from '../../app/categoriesStore';
 import { useMotivationsStore } from '../../app/motivationsStore';
-import { getCategoryTitleByName } from '../../helpers/categories.helper';
 
 import { loaders } from '../../helpers/loader.helper';
 
@@ -21,6 +22,8 @@ import { styles as globalStyles } from '../../styles/globalStyle';
 
 export const MotivationsByCategory = () => {
     const params = useParams();
+
+    const { categories } = useCategoriesStore();
 
     const {
         fetchMotivationsByCategory,
@@ -39,8 +42,16 @@ export const MotivationsByCategory = () => {
 
     const navigate = useNavigate();
 
+    const getCategoryTitleById = categoryId => {
+        const { category } = categories.find(
+            category => category.id === categoryId
+        );
+
+        return category;
+    };
+
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 8 }}>
             {isLoaded ? (
                 <>
                     <Header
@@ -69,7 +80,9 @@ export const MotivationsByCategory = () => {
                             </Pressable>
                         }
                         centerComponent={{
-                            text: getCategoryTitleByName(params.category).text,
+                            text: getCategoryTitleById(
+                                params.category
+                            ).toUpperCase(),
                             style: {
                                 color: '#fff',
                                 fontSize: 20,
@@ -105,13 +118,16 @@ export const MotivationsByCategory = () => {
                             )}
                             keyExtractor={item => item._id}
                             style={{ marginTop: 10 }}
+                            contentContainerStyle={{ paddingBottom: 90 }}
                         />
                     ) : (
                         <View>
                             <CustomText
                                 style={styles.category}
-                                text="Вы - новый пользователь! Добавьте свои фразы в
-                                базу!"
+                                text={
+                                    Dictionary[Constants.language].strings
+                                        .commons.EMPTY
+                                }
                             />
                         </View>
                     )}
