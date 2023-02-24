@@ -1,4 +1,4 @@
-package com.sinovdeath.client.newarchitecture.components;
+package com.sinovdeath.motivations.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;

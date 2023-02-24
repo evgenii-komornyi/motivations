@@ -1,4 +1,4 @@
-package com.sinovdeath.client;
+package com.sinovdeath.motivations;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -8,8 +8,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.widget.RemoteViews;
 
-import com.sinovdeath.client.services.Motivation;
-import com.sinovdeath.client.services.WidgetService;
+import com.sinovdeath.motivations.services.Motivation;
+import com.sinovdeath.motivations.services.WidgetService;
 
 public class MotivationWidget extends AppWidgetProvider {
 

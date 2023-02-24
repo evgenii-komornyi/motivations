@@ -1,15 +1,11 @@
-package com.sinovdeath.client;
+package com.sinovdeath.motivations;
 
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
-import com.sinovdeath.client.services.Motivation;
-import com.sinovdeath.client.services.WidgetService;
 
 import expo.modules.ReactActivityDelegateWrapper;
 

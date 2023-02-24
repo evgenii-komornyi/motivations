@@ -1,20 +1,15 @@
-package com.sinovdeath.client.modules.sharedstorage;
+package com.sinovdeath.motivations.modules.sharedstorage;
 
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.Log;
-import android.widget.RemoteViews;
 
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
-import com.sinovdeath.client.MotivationWidget;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.sinovdeath.motivations.MotivationWidget;
 
 public class SharedStorage extends ReactContextBaseJavaModule {
     ReactApplicationContext context;

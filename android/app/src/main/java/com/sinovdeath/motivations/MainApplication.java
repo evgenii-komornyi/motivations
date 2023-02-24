@@ -1,4 +1,4 @@
-package com.sinovdeath.client;
+package com.sinovdeath.motivations;
 
 import android.app.Application;
 import android.content.Context;
@@ -12,10 +12,10 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.config.ReactFeatureFlags;
 import com.facebook.soloader.SoLoader;
-import com.sinovdeath.client.modules.cache_cleaner.CacheCleanerPackager;
-import com.sinovdeath.client.modules.deviceinfo.DeviceInfoPackager;
-import com.sinovdeath.client.modules.sharedstorage.SharedStoragePackager;
-import com.sinovdeath.client.newarchitecture.MainApplicationReactNativeHost;
+import com.sinovdeath.motivations.modules.cache_cleaner.CacheCleanerPackager;
+import com.sinovdeath.motivations.modules.deviceinfo.DeviceInfoPackager;
+import com.sinovdeath.motivations.modules.sharedstorage.SharedStoragePackager;
+import com.sinovdeath.motivations.newarchitecture.MainApplicationReactNativeHost;
 
 import expo.modules.ApplicationLifecycleDispatcher;
 import expo.modules.ReactNativeHostWrapper;
@@ -95,7 +95,7 @@ public class MainApplication extends Application implements ReactApplication {
          We use reflection here to pick up the class that initializes Flipper,
         since Flipper library is not available in release mode
         */
-        Class<?> aClass = Class.forName("com.sinovdeath.client.ReactNativeFlipper");
+        Class<?> aClass = Class.forName("com.sinovdeath.motivations.ReactNativeFlipper");
         aClass
             .getMethod("initializeFlipper", Context.class, ReactInstanceManager.class)
             .invoke(null, context, reactInstanceManager);

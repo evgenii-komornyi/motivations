@@ -1,4 +1,4 @@
-package com.sinovdeath.client.modules.deviceinfo;
+package com.sinovdeath.motivations.modules.cache_cleaner;
 
 import androidx.annotation.NonNull;
 
@@ -11,13 +11,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class DeviceInfoPackager implements ReactPackage {
+public class CacheCleanerPackager implements ReactPackage {
     @NonNull
     @Override
     public List<NativeModule> createNativeModules(@NonNull ReactApplicationContext reactApplicationContext) {
         List<NativeModule> modules = new ArrayList<>();
 
-        modules.add(new DeviceInfo(reactApplicationContext));
+        modules.add(new CacheCleaner(reactApplicationContext));
 
         return modules;
     }

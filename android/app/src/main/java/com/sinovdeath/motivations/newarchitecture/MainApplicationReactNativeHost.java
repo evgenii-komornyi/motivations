@@ -1,4 +1,4 @@
-package com.sinovdeath.client.newarchitecture;
+package com.sinovdeath.motivations.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -16,13 +16,12 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.UIManager;
 import com.facebook.react.fabric.ComponentFactory;
 import com.facebook.react.fabric.CoreComponentsRegistry;
-import com.facebook.react.fabric.EmptyReactNativeConfig;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.sinovdeath.client.BuildConfig;
-import com.sinovdeath.client.newarchitecture.components.MainComponentsRegistry;
-import com.sinovdeath.client.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.sinovdeath.motivations.BuildConfig;
+import com.sinovdeath.motivations.newarchitecture.components.MainComponentsRegistry;
+import com.sinovdeath.motivations.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 

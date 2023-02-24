@@ -1,4 +1,4 @@
-package com.sinovdeath.client.modules.deviceinfo;
+package com.sinovdeath.motivations.modules.deviceinfo;
 
 import android.annotation.SuppressLint;
 import android.provider.Settings;

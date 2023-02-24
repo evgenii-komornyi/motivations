@@ -1,11 +1,9 @@
-package com.sinovdeath.client.services;
+package com.sinovdeath.motivations.services;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;

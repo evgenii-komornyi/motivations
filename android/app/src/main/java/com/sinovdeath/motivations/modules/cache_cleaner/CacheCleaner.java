@@ -1,6 +1,4 @@
-package com.sinovdeath.client.modules.cache_cleaner;
-
-import android.util.Log;
+package com.sinovdeath.motivations.modules.cache_cleaner;
 
 import androidx.annotation.NonNull;
 

@@ -1,4 +1,4 @@
-package com.sinovdeath.client.services;
+package com.sinovdeath.motivations.services;
 
 public class Motivation {
     public String title;
