@@ -1,6 +1,6 @@
 # Motivation Application UI React Native + Widget
 
-![Motivation App](https://komornyi.space/static/img/projects/21.png)
+![Motivation App](https://github.com/user-attachments/assets/20d4bd69-9f4c-4a05-af2a-df7470052cbb)
 
 The Motivation application was created for self-help in unpleasant moments of life.
 
